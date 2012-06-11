@@ -1,0 +1,18 @@
+increase surface area
+    "       "      "  look-ahead
+get to biggest piece
+ "   "     "     "   look-ahead
+
+http://retirementexperiment.blogspot.com/2009/03/flood-it-game.html
+
+unbury mode
+
+know when to change direction to tackle a built up area such as a busy cornor.
+
+Use all colours frequently rather than repeating the same colors within a few moves
+
+look for long chains of color
+
+Save one color for as long as you can, then same another color for as long as you can. - http://selearninggames.wikispaces.com/message/view/home/125308
+
+http://stackoverflow.com/questions/1430962/how-to-optimally-solve-the-flood-fill-puzzle

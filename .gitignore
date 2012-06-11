@@ -4,3 +4,12 @@ obj
 
 # mstest test results
 TestResults
+
+#ReSharper
+_ReSharper*
+*.Resharper.user
+*.Resharper
+
+
+# VS settings
+*.suo
