@@ -64,12 +64,41 @@ namespace Model
 		{
 			return Colors[x,y];
 		}
+
+        private bool IsOnBoard(int x, int y)
+        {
+            return IsWithinWidth(x) && IsWithinHeight(y);
+        }
+        private bool IsWithinWidth(int x)
+        {
+            return IsWithinLeftSide(x) && IsWithinRightSide(x);
+        }
+        private bool IsWithinHeight(int y)
+        {
+            return IsWithinTopSide(y) && IsWithinBottomSide(y);
+        }
+        private bool IsWithinRightSide(int x)
+        {
+            return x <= BoardWidth;
+        }
+        private bool IsWithinLeftSide(int x)
+        {
+            return x >= 0;
+        }
+        private bool IsWithinTopSide(int y)
+        {
+            return y >= 0;
+        }
+        private bool IsWithinBottomSide(int y)
+        {
+            return y <= BoardHeigth;
+        }
 		
         public void Pick(Color color)
 		{
 			Color previousColor = GetColor(0, 0);
-			var traveled = new bool[BoardWidth,BoardHeigth];
-			FillFrom(0, 0, previousColor, color, traveled);
+            FillFrom(0, 0, previousColor, color);
+            //FillFrom(0, 0, previousColor, color);
 			if (IsFilled && BoardFilled != null)
 				BoardFilled(this, new EventArgs());
             //print traveled
@@ -84,28 +113,72 @@ namespace Model
             //}
             //Console.WriteLine();
 		}
-		
-        private void FillFrom(int x, int y, Color previousColor, Color chosenColor, bool[,] traveled)
-		{
-		    Color currentColor = GetColor(x, y);
-			if (currentColor == previousColor && !traveled[x,y])
-			{
-				SetToColor(x, y, chosenColor);
-				traveled[x, y] = true;
-				//recurse right
-				if (x < BoardWidth-1)
-					FillFrom(x + 1, y, previousColor, chosenColor, traveled);
-				//recurse left
-				if (x > 0)
-					FillFrom(x - 1, y, previousColor, chosenColor, traveled);
-				//recurse down
-				if (y < BoardHeigth-1)
-					FillFrom(x, y + 1, previousColor, chosenColor, traveled);
-				//recurse up
-				if (y > 0)
-					FillFrom(x, y - 1, previousColor, chosenColor, traveled);
-			}
-		}
+
+        private void FillFrom(int x, int y, Color previousColor, Color chosenColor)
+        {
+            Color currentColor = GetColor(x, y);
+            if (currentColor == previousColor)
+            {
+                SetToColor(x, y, chosenColor);
+                //recurse right
+                if (IsWithinRightSide(x + 1))
+                    FillFrom(x + 1, y, previousColor, chosenColor);
+                //recurse left
+                if (IsWithinLeftSide(x - 1))
+                    FillFrom(x - 1, y, previousColor, chosenColor);
+                //recurse down
+                if (IsWithinBottomSide(y + 1))
+                    FillFrom(x, y + 1, previousColor, chosenColor);
+                //recurse up
+                if (IsWithinTopSide(y - 1))
+                    FillFrom(x, y - 1, previousColor, chosenColor);
+            }
+        }
+        //private struct Point
+        //{
+        //    private int _x;
+        //    public int X { get { return _x; } }
+
+        //    private int _y;
+        //    public int Y { get { return _y; } }
+
+        //    public Point(int x, int y)
+        //    {
+        //        _x = x;
+        //        _y = y;
+        //    }
+        //}
+        //private void FillFrom(int x, int y, Color previousColor, Color chosenColor) //http://en.wikipedia.org/wiki/Flood_fill
+        //{
+        //    Queue<Point> queue = new Queue<Point>();
+        //    if (GetColor(x, y) != previousColor)
+        //        return;
+        //    queue.Enqueue(new Point(x, y));
+        //    while(queue.Count() > 0)
+        //    {
+        //        Point currentPoint = queue.Dequeue();
+        //        int currentX = currentPoint.X;
+        //        int currentY = currentPoint.Y;
+
+        //        if (GetColor(currentX, currentY) == previousColor)
+        //        {
+        //            int west = currentX;
+        //            int east = currentX;
+        //            while (IsWithinLeftSide(west) && GetColor(west, currentY) == previousColor)
+        //                west--;
+        //            while (IsWithinRightSide(east) && GetColor(east, currentY) == previousColor)
+        //                east++;
+        //            for (int i = west; i < east; i++)
+        //            {
+        //                SetToColor(i, currentY, chosenColor);
+        //                if (IsWithinBottomSide(currentY + 1) && GetColor(i, currentY + 1) == previousColor)
+        //                    queue.Enqueue(new Point(i, currentY + 1));
+        //                if (IsWithinTopSide(currentY - 1) && GetColor(i, currentY - 1) == previousColor)
+        //                    queue.Enqueue(new Point(i, currentY - 1));
+        //            }
+        //        }
+        //    }
+        //}
 		
         public override string ToString()
 		{
