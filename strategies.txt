@@ -5,14 +5,23 @@ get to biggest piece
 
 http://retirementexperiment.blogspot.com/2009/03/flood-it-game.html
 
-unbury mode
+unbury mode:
+It is important to recognize which color still has one of it's own buried and try to avoid choosing that color until it is unburied. Therefore, thinking of it like Chess in the last 8 moves or so is crucial to beating it with extra moves left over. Which color is has the least buried and what would unburrie it. If the one that would unbury it is also burried by another color then keep working backwards until you figure the best combination to finish off with.
 
-know when to change direction to tackle a built up area such as a busy cornor.
+Work backwards, then forwards.----Not layerable
 
-Use all colours frequently rather than repeating the same colors within a few moves
+Use all colours frequently rather than repeating the same colors within a few moves.
+-or?- ----Do these work together?----Covered by recently used queue
+Save one color for as long as you can, then save another color for as long as you can. - http://selearninggames.wikispaces.com/message/view/home/125308----If you can go around, should you go around?
 
-look for long chains of color
+Look for long chains of color.----Covered by search algorithm
 
-Save one color for as long as you can, then same another color for as long as you can. - http://selearninggames.wikispaces.com/message/view/home/125308
+Look for places to burst through checkerboard patterns.----Covered by farthest distance algorithm
+
+Know when to change direction to tackle a built up area such as a busy cornor.----When it becomes the farthest point away
+
+Completly clear a color----should be priority 1/have the highest weight
 
 http://stackoverflow.com/questions/1430962/how-to-optimally-solve-the-flood-fill-puzzle
+
+completely different approach http://markgritter.livejournal.com/673948.html
