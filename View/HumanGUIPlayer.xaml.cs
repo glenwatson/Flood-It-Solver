@@ -66,12 +66,13 @@ namespace View
 		private void GameWinner(int turns)
 		{
 			MessageBox.Show("It took you "+turns+" turns");
-			Close();
+            //Close(); //play again?
+            Controller.Instance(this, this).Reset();
 		}
 
 		public void Init(Color[,] board)
 		{
-			_destination = Controller.Instance(null, null);
+			_destination = Controller.Instance(this, this);
 			BoardUpdated(board);
 		}
 
@@ -80,9 +81,9 @@ namespace View
 			boardView.Board = board;
 		}
 
-		public void GameOver(int turns)
+		public void GameOver(WinEventArgs e)
 		{
-			GameWinner(turns);
+			GameWinner(e.Turns);
 		}
 
 		public event Player.ColorSelectedDel ColorSelected;

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Model;
 using Color = Model.Color;
 
 namespace View
@@ -39,9 +40,9 @@ namespace View
             boardView.Board = board;
         }
 
-        public void GameOver(int turns)
+        public void GameOver(WinEventArgs e)
         {
-            MessageBox.Show("Game Over. It took you " + turns + " turns.");
+            MessageBox.Show("Game Over. It took you " + e.Turns + " turns.");
         }
     }
 }

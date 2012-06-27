@@ -9,6 +9,6 @@ namespace View
     public interface IView
     {
         void BoardUpdated(Color[,] board);
-        void GameOver(int turns);
+        void GameOver(WinEventArgs winEvent);
     }
 }

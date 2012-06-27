@@ -1,0 +1,43 @@
+PixilateGraph
+	- head : Node
+	
+	+ PixilateGraph(board : Board)
+		
+	
+	//needs to be efficient!
+	+ DFS() : IEnumerable<Node>
+		return DFS(head)
+	//I don't think you can do a DFS on a graph	w/o turning it into a tree somehow	
+	- DFS(current : Node) : IEnumberable<Node>
+		foreach node in current.Adjacent
+			if
+			yeild return node
+			
+	+ BFS() : IEnumberable<Node>
+		let waitingToBeVisited be a new Queue<Node>
+		let visited be a new List<Node> //Optimization - Add visited bool to Node, reset after each BFS/DFS. And how do you plan on traversing the graph to reset all of them?
+		add head to waitingToBeVisited
+		while waitingToBeVisited is not empty
+			let current be waitingToBeVisited.Dequeue()
+			yield return current
+			add all of current's adjacent nodes which are not already in visited to waitingToBeVisited
+			
+		
+Node
+- Color : SquareColor
+- Adjacent : List<Node> (DLL)
+
++ PickColor(color : Color) : void
+	PickColor(color, head)
++ PickColor(color : Color, source : Node) : void
+	foreach node in adjacent,
+		if node's color is color,
+			append node's adjacent to source's adjacent
+			remove node from source's adjacent
+			
+	var matched = source.adjacent.where(n => n.color == color)
+	source.adjacent.Add(matched.selectMany(n => n.adjacent);
+	source.removeAll(matched);
+	
+	
+	

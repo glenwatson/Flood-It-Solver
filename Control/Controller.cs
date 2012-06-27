@@ -10,11 +10,6 @@ namespace Control
     {
         private Game game;
 
-        public static void Main(string[] args)
-        {
-            new HumanGUIPlayer();
-        }
-
         #region singleton
 
         private static Controller _singleton;
@@ -26,8 +21,6 @@ namespace Control
             return _singleton;
         }
 
-        #endregion
-
         private Controller()
         {
             game = new Game(2, 3);
@@ -35,6 +28,7 @@ namespace Control
             IView view = new StdOutDisplay();
             Player player = new Player(view, input);
         }
+        #endregion
 
         public void PickColor(Color color)
         {

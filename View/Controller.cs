@@ -14,8 +14,7 @@ namespace View
         public static void Main(string[] args)
         {
             var gui = new HumanGUIPlayer();
-            Instance(gui, gui);
-            gui.Init(Instance(null, null).GetUpdate());
+            gui.Init(Instance(gui, gui).GetUpdate());
             new Application().Run(gui);
             //Console.ReadLine();
         }
@@ -35,12 +34,12 @@ namespace View
 
         private Controller(IInput i, IView v)
         {
-            game = new Game(10, 10);
+            game = new Game(9, 16);
             
             input = i;
             view = v;
 
-            game.Winner += (s, e) => view.GameOver(e.Turns);
+            game.Winner += (s, e) => view.GameOver(e);
 
             Player player = new Player(view, input);
         }
@@ -48,6 +47,12 @@ namespace View
         public void PickColor(Color color)
         {
             game.PickColor(color);
+            view.BoardUpdated(GetUpdate());
+        }
+
+        public void Reset()
+        {
+            game.Reset();
             view.BoardUpdated(GetUpdate());
         }
 

@@ -57,7 +57,7 @@ namespace View
                 for (int col = 0; col < grdBoard.ColumnDefinitions.Count; col++)
                 {
                     var color = ColorToBrush(Board[row, col]);
-                    var rect = new Rectangle { Stroke = Brushes.Azure, Fill = color, };
+                    var rect = new Rectangle { Stroke = Brushes.Azure, Fill = color, Margin = new Thickness(-1), };
 
                     grdBoard.Children.Add(rect);
                     Grid.SetColumn(rect, col);

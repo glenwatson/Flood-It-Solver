@@ -8,12 +8,16 @@ namespace Model
 	public class WinEventArgs : EventArgs
 	{
 		public int Turns { get; set; }
+        public DateTime TimeStarted { get; set; }
+        public DateTime TimeCompleted { get; set; }
+        public FilledEventArgs FilledEvent { get; set; }
 	}
 	public delegate void DelWin(object sender, WinEventArgs args);
 	public class Game
 	{
 		public event DelWin Winner;
 		public int Turns { get; private set; }
+        private DateTime _timeOfFirstMove;
 		private readonly Board _board;
 		public Color[,] Board
 		{
@@ -23,11 +27,25 @@ namespace Model
 		public Game(int xSize, int ySize)
 		{
 			_board = new Board(xSize, ySize);
-			_board.BoardFilled += (s, e) => { if (Winner != null) Winner(s, new WinEventArgs { Turns = Turns }); };
+            _board.BoardFilled += (s, e) => 
+            {
+                if (Winner != null)
+                {
+                    Winner(s, new WinEventArgs
+                    {
+                        TimeCompleted = DateTime.Now,
+                        TimeStarted = _timeOfFirstMove,
+                        Turns = Turns,
+                        FilledEvent = e
+                    });
+                }
+            };
 		}
 
 		public void PickColor(Color color)
 		{
+            if (Turns == 0)
+                _timeOfFirstMove = DateTime.Now;
 			Turns++;
 			_board.Pick(color);
 		}
@@ -36,5 +54,11 @@ namespace Model
 		{
 			return _board.ToString();
 		}
-	}
+
+        public void Reset()
+        {
+            _board.Reset();
+            Turns = 0;
+        }
+    }
 }

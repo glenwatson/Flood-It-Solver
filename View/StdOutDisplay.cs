@@ -13,9 +13,9 @@ namespace View
              PrintBoard(board);
         }
 
-        public void GameOver(int turns)
+        public void GameOver(WinEventArgs e)
         {
-            Console.WriteLine("Game Over. It took you {0} turns.", turns);
+            Console.WriteLine("Game Over. It took you {0} turns.", e.Turns);
         }
 
         public void Init(Color[,] board)

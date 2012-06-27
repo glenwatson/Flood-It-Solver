@@ -6,13 +6,18 @@ using System.Text;
 
 namespace Model
 {
-	public delegate void DelBoardFilled(object sender, EventArgs args);
+    public class FilledEventArgs : EventArgs
+    {
+        public int BoardWidth { get; set; }
+        public int BoardHeight { get; set; }
+    }
+	public delegate void DelBoardFilled(object sender, FilledEventArgs args);
 	public class Board
 	{
 		public event DelBoardFilled BoardFilled;
 		public Color[,] Colors { get; private set; }
-		public int BoardWidth { get { return Colors.GetLength(0); } }
-		public int BoardHeigth { get { return Colors.GetLength(1); } }
+		public int BoardWidth { get { return Colors.GetLength(1); } }
+		public int BoardHeigth { get { return Colors.GetLength(0); } }
 		public bool IsFilled 
 		{ 
 			get
@@ -41,28 +46,33 @@ namespace Model
         {
             Colors = colors;
         }
+
+        public void Reset()
+        {
+            Randomize();
+        }
 		
         private void Randomize()
 		{
 			var colorValues = Enum.GetValues(typeof(Color));
 			Random rand = new Random();
-			for (int i = 0; i < BoardWidth; i++)
-				for (int j = 0; j < BoardHeigth; j++)
+			for (int w = 0; w < BoardWidth; w++)
+				for (int h = 0; h < BoardHeigth; h++)
 				{
 					int arrayLength = colorValues.GetLength(0);
 					int randIdx = rand.Next(arrayLength);
-					Colors[i, j] = (Color)colorValues.GetValue(randIdx);
+					Colors[h, w] = (Color)colorValues.GetValue(randIdx);
 				}
 		}
 		
         private void SetToColor(int x, int y, Color color)
 		{
-			Colors[x,y] = color;
+			Colors[y,x] = color;
 		}
 		
         private Color GetColor(int x, int y)
 		{
-			return Colors[x,y];
+			return Colors[y, x];
 		}
 
         private bool IsOnBoard(int x, int y)
@@ -79,7 +89,7 @@ namespace Model
         }
         private bool IsWithinRightSide(int x)
         {
-            return x <= BoardWidth;
+            return x < BoardWidth;
         }
         private bool IsWithinLeftSide(int x)
         {
@@ -91,27 +101,15 @@ namespace Model
         }
         private bool IsWithinBottomSide(int y)
         {
-            return y <= BoardHeigth;
+            return y < BoardHeigth;
         }
 		
         public void Pick(Color color)
 		{
 			Color previousColor = GetColor(0, 0);
             FillFrom(0, 0, previousColor, color);
-            //FillFrom(0, 0, previousColor, color);
 			if (IsFilled && BoardFilled != null)
-				BoardFilled(this, new EventArgs());
-            //print traveled
-            //for (int i = 0; i < traveled.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < traveled.GetLength(1); j++)
-            //    {
-            //        Console.Write(" ");
-            //        Console.Write(traveled[i, j] ? " " : "X");
-            //    }
-            //    Console.WriteLine();
-            //}
-            //Console.WriteLine();
+                BoardFilled(this, new FilledEventArgs() { BoardWidth = BoardWidth, BoardHeight = BoardHeigth });
 		}
 
         private void FillFrom(int x, int y, Color previousColor, Color chosenColor)
@@ -183,12 +181,12 @@ namespace Model
         public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < BoardWidth; i++)
+			for (int w = 0; w < BoardWidth; w++)
 			{
-				for (int j = 0; j < BoardHeigth; j++)
+				for (int h = 0; h < BoardHeigth; h++)
 				{
 					sb.Append(' ');
-					sb.Append(ColorToLetter(Colors[i,j]));
+					sb.Append(ColorToLetter(Colors[h,w]));
 					//sb.Append(']');
 				}
 				sb.AppendLine();
