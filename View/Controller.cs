@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using Control;
 using Model;
@@ -8,16 +9,7 @@ namespace View
     public class Controller : IInputHandler
     {
         private Game game;
-        private IInput input;
-        private IView view;
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            var gui = new HumanGUIPlayer();
-            gui.Init(Instance(gui, gui).GetUpdate());
-            new Application().Run(gui);
-            //Console.ReadLine();
-        }
+        private Player player;
 
         #region singleton
 
@@ -34,31 +26,23 @@ namespace View
 
         private Controller(IInput i, IView v)
         {
+            player = new Player(v, i);
             game = new Game(9, 16);
-            
-            input = i;
-            view = v;
+            game.BoardUpdated += player.BoardWasUpdated;
+            //Have to manually update the player the first time because we missed the event in the Game ctor()
+            player.BoardWasUpdated(game.GetUpdate());
 
-            game.Winner += (s, e) => view.GameOver(e);
-
-            Player player = new Player(view, input);
+            game.Winner += (s, e) => { player.GameOver(e); };
         }
 
         public void PickColor(Color color)
         {
             game.PickColor(color);
-            view.BoardUpdated(GetUpdate());
         }
 
         public void Reset()
         {
             game.Reset();
-            view.BoardUpdated(GetUpdate());
-        }
-
-        private Color[,] GetUpdate()
-        {
-            return game.Board;
         }
 
         //[STAThread]

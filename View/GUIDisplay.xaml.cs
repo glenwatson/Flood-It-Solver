@@ -20,7 +20,8 @@ namespace View
     /// </summary>
     public partial class GUIDisplay : Window, IView
     {
-        public GUIDisplay()
+        #region IView
+        public void Display()
         {
             InitializeComponent();
         }
@@ -29,6 +30,11 @@ namespace View
         {
             UpdateBoardView(board);
         }
+        public void GameOver(WinEventArgs e)
+        {
+            MessageBox.Show("Game Over. It took you " + e.Turns + " turns.");
+        }
+        #endregion
 
         public void Init(Color[,] board)
         {
@@ -40,9 +46,6 @@ namespace View
             boardView.Board = board;
         }
 
-        public void GameOver(WinEventArgs e)
-        {
-            MessageBox.Show("Game Over. It took you " + e.Turns + " turns.");
-        }
+        
     }
 }

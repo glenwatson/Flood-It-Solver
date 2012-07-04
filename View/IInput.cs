@@ -8,7 +8,6 @@ namespace View
 {
     public interface IInput
     {
-        event Player.ColorSelectedDel ColorSelected;
-        void SetPlayer(Player player);
+        
     }
 }

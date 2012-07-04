@@ -16,6 +16,11 @@ namespace Model
 	public class Game
 	{
 		public event DelWin Winner;
+        public event DelBoardUpdated BoardUpdated
+        {
+            add { _board.BoardUpdated += value; }
+            remove { _board.BoardUpdated -= value; }
+        }
 		public int Turns { get; private set; }
         private DateTime _timeOfFirstMove;
 		private readonly Board _board;
@@ -50,15 +55,20 @@ namespace Model
 			_board.Pick(color);
 		}
 
-		public override string ToString()
-		{
-			return _board.ToString();
-		}
+        public Color[,] GetUpdate()
+        {
+            return _board.Colors;
+        }
 
         public void Reset()
         {
             _board.Reset();
             Turns = 0;
+        }
+
+        public override string ToString()
+        {
+            return _board.ToString();
         }
     }
 }

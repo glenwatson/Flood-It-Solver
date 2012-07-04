@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AIPlayer.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Driver.cs" />
     <Compile Include="GUIDisplay.xaml.cs">
       <DependentUpon>GUIDisplay.xaml</DependentUpon>
     </Compile>

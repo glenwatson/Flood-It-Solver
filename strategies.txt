@@ -27,3 +27,5 @@ Completly clear a color----should be priority 1/have the highest weight
 http://stackoverflow.com/questions/1430962/how-to-optimally-solve-the-flood-fill-puzzle
 
 completely different approach http://markgritter.livejournal.com/673948.html
+
+Pick 4 or 5 colors and act as if the remaining color(s) are walls. Find quickest path to cover all choosen colors. Select remaining colors and any other colors that are trapped.

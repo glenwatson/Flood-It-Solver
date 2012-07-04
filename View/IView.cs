@@ -8,6 +8,7 @@ namespace View
 {
     public interface IView
     {
+        void Display();
         void BoardUpdated(Color[,] board);
         void GameOver(WinEventArgs winEvent);
     }

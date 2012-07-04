@@ -88,12 +88,5 @@ namespace View
             return result;
 
         }
-
-        public event Player.ColorSelectedDel ColorSelected;
-        private Player player;
-        public void SetPlayer(Player p)
-        {
-            player = p;
-        }
     }
 }

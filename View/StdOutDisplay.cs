@@ -8,6 +8,8 @@ namespace View
 {
     public class StdOutDisplay : IView
     {
+        #region IView
+        public void Display() {}
         public void BoardUpdated(Color[,] board)
         {
              PrintBoard(board);
@@ -17,6 +19,7 @@ namespace View
         {
             Console.WriteLine("Game Over. It took you {0} turns.", e.Turns);
         }
+        #endregion
 
         public void Init(Color[,] board)
         {
