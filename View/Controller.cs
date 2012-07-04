@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using Control;
+﻿using Control;
 using Model;
 
 namespace View
@@ -30,7 +27,7 @@ namespace View
             game = new Game(9, 16);
             game.BoardUpdated += player.BoardWasUpdated;
             //Have to manually update the player the first time because we missed the event in the Game ctor()
-            player.BoardWasUpdated(game.GetUpdate());
+            player.BoardWasUpdated(GetUpdate());
 
             game.Winner += (s, e) => { player.GameOver(e); };
         }
@@ -43,6 +40,11 @@ namespace View
         public void Reset()
         {
             game.Reset();
+        }
+
+        public Color[,] GetUpdate()
+        {
+            return game.GetUpdate();
         }
 
         //[STAThread]

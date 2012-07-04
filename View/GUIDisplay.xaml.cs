@@ -20,10 +20,15 @@ namespace View
     /// </summary>
     public partial class GUIDisplay : Window, IView
     {
+        public GUIDisplay()
+        {
+            InitializeComponent();
+        }
+
         #region IView
         public void Display()
         {
-            InitializeComponent();
+            Show();
         }
 
         public void BoardUpdated(Color[,] board)
@@ -36,11 +41,6 @@ namespace View
         }
         #endregion
 
-        public void Init(Color[,] board)
-        {
-            UpdateBoardView(board);
-            Show();
-        }
         private void UpdateBoardView(Color[,] board)
         {
             boardView.Board = board;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Model;
 
 namespace View
@@ -6,6 +7,11 @@ namespace View
     public class AIPlayer : IInput
     {
         private readonly AILogic _logic;
+
+        public void Start()
+        {
+            _logic.Start();
+        }
 
         public static AIPlayer WithRandomLogic()
         {
@@ -24,12 +30,25 @@ namespace View
 
         public Color MakeMove(Color[,] board)
         {
+            Thread.Sleep(3000);
             return _logic.ChooseColor(board);
         }
 
         abstract class AILogic
         {
             public abstract Color ChooseColor(Color[,] board);
+            public void Start()
+            {
+                while (true)
+                {
+                    getController().PickColor(ChooseColor(getController().GetUpdate()));
+                }
+            }
+
+            private Controller getController()
+            {
+                return Controller.Instance(null, null);
+            }
         }
 
         class RandomLogic : AILogic
