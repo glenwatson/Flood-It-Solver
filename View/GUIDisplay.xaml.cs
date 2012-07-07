@@ -30,7 +30,6 @@ namespace View
         {
             Show();
         }
-
         public void BoardUpdated(Color[,] board)
         {
             UpdateBoardView(board);

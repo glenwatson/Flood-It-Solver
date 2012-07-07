@@ -7,7 +7,7 @@ using View;
 namespace Model
 {
     /// <summary>
-    /// Kind of a second controller. 
+    /// Kind of a 2nd controller. 
     ///     The first controller controls the communication between the Model and View.
     ///     This controller controls the communication between the actual View/Input and the first controller.
     /// </summary>
@@ -51,6 +51,7 @@ namespace Model
         public void GameOver(WinEventArgs winArgs)
         {
             view.GameOver(winArgs);
+            input.GameOver(winArgs);
         }
     }
 }

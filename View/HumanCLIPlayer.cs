@@ -12,6 +12,11 @@ namespace View
             return PromptForColor();
         }
 
+        public void GameOver(WinEventArgs winArgs)
+        {
+            Console.WriteLine(winArgs);
+        }
+
         private static Color PromptForColor()
         {
             Console.WriteLine("PickColor your color:");

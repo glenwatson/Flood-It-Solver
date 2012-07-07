@@ -24,10 +24,7 @@ namespace Model
 		public int Turns { get; private set; }
         private DateTime _timeOfFirstMove;
 		private readonly Board _board;
-		public Color[,] Board
-		{
-			get { return (Color[,])_board.Colors.Clone(); }
-		}
+
 		public Game(int size) : this(size, size) { }
 		public Game(int xSize, int ySize)
 		{
@@ -57,7 +54,7 @@ namespace Model
 
         public Color[,] GetUpdate()
         {
-            return _board.Colors;
+            return _board.GetCopyOfBoard();
         }
 
         public void Reset()

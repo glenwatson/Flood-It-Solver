@@ -17,11 +17,11 @@ namespace Model
 	{
 		public event DelBoardFilled BoardFilled;
         public event DelBoardUpdated BoardUpdated;
-		public Color[,] Colors { get; private set; }
+        private Color[,] Colors { get; set; }
 		public int BoardWidth { get { return Colors.GetLength(1); } }
 		public int BoardHeigth { get { return Colors.GetLength(0); } }
 		public bool IsFilled 
-		{ 
+		{
 			get
 			{
 				Color theColor = Colors[0, 0];
@@ -53,8 +53,11 @@ namespace Model
         private void FireBoardUpdated()
         {
             if(BoardUpdated != null)
-                //TODO: copy the Colors array before firing event. We are giving outsiders edit access to the board, breaking encapsulation
-                BoardUpdated(Colors);
+                BoardUpdated(GetCopyOfBoard());
+        }
+        public Color[,] GetCopyOfBoard()
+        {
+            return (Color[,])Colors.Clone();
         }
 
         public void Reset()
@@ -121,8 +124,8 @@ namespace Model
             if (previousColor != color) //if they picked a new color
             {
                 FillFrom(0, 0, previousColor, color);
-                FireBoardUpdated();
             }
+            FireBoardUpdated();
 			if (IsFilled && BoardFilled != null)
                 BoardFilled(this, new FilledEventArgs() { BoardWidth = BoardWidth, BoardHeight = BoardHeigth });
 		}

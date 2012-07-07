@@ -8,6 +8,7 @@ namespace View
 {
     public interface IInput
     {
-        
+
+        void GameOver(WinEventArgs winArgs);
     }
 }

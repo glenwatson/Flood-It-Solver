@@ -4,51 +4,60 @@ using Model;
 
 namespace View
 {
-    public class AIPlayer : IInput
+    public class AIInput : IInput
     {
         private readonly AILogic _logic;
+        private Thread _logicThread;
+        private bool _shouldRun = true;
 
         public void Start()
         {
-            _logic.Start();
+            _shouldRun = true;
+            _logicThread.Start();
+        }
+        public void Stop()
+        {
+            _shouldRun = false;
         }
 
-        public static AIPlayer WithRandomLogic()
+        public static AIInput WithRandomLogic()
         {
-            return new AIPlayer(new RandomLogic());
+            return new AIInput(new RandomLogic());
+        }
+        public static AIInput WithAnalysisLogic()
+        {
+            return new AIInput(new AnalysisLogic());
         }
 
-        public static AIPlayer WithAnalysisLogic()
-        {
-            return new AIPlayer(new AnalysisLogic());
-        }
-        
-        private AIPlayer(AILogic logic)
+        private AIInput(AILogic logic)
         {
             _logic = logic;
+            _logicThread = new Thread(StartQueryingLogic);
         }
 
-        public Color MakeMove(Color[,] board)
+        private void StartQueryingLogic()
         {
-            Thread.Sleep(3000);
-            return _logic.ChooseColor(board);
+            while (_shouldRun)
+            {
+                Color colorChosen = _logic.ChooseColor(GetController().GetUpdate());
+                Thread.Sleep(100);
+                GetController().PickColor(colorChosen);
+            }
+        }
+
+        public void GameOver(WinEventArgs winArgs)
+        {
+            GetController().Reset();
+        }
+
+        private Controller GetController()
+        {
+            return Controller.Instance(this, null);
         }
 
         abstract class AILogic
         {
             public abstract Color ChooseColor(Color[,] board);
-            public void Start()
-            {
-                while (true)
-                {
-                    getController().PickColor(ChooseColor(getController().GetUpdate()));
-                }
-            }
-
-            private Controller getController()
-            {
-                return Controller.Instance(null, null);
-            }
         }
 
         class RandomLogic : AILogic
@@ -73,7 +82,7 @@ namespace View
                 {
                     Board boardLogic = new Board(board);
                     boardLogic.Pick(color);
-                    int surfaceArea = EdgeCoverage(boardLogic.Colors);
+                    int surfaceArea = EdgeCoverage(boardLogic.GetCopyOfBoard());
                     if (surfaceArea > greatestSurfaceArea)
                     {
                         greatestSurfaceArea = surfaceArea;

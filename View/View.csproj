@@ -55,7 +55,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIPlayer.cs" />
+    <Compile Include="AIInput.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="GUIDisplay.xaml.cs">

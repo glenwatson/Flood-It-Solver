@@ -11,8 +11,8 @@ namespace View
         public static void Main(string[] args)
         {
             //create View and Input
-            //var gui = new HumanGUIPlayer();
-            var ai = AIPlayer.WithRandomLogic();
+            //HumanGUIPlayer gui = new HumanGUIPlayer();
+            AIInput ai = AIInput.WithRandomLogic();
             IInput input = ai;
             IView view = new GUIDisplay();
             //give the View and Input to the Controller
