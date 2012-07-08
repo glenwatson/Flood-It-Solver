@@ -6,7 +6,7 @@ using View.Shared;
 
 namespace View.Players
 {
-    public class HumanCLIPlayer : IInput
+    public class StdInInput : IInput
     {
         public Color MakeMove(Color[,] board)
         {
