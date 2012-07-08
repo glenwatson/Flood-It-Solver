@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using View.Input;
+using View.Players;
 using View.Shared;
 using View.Views;
 
@@ -14,7 +20,7 @@ namespace View
             //HumanGUIPlayer gui = new HumanGUIPlayer();
             AIInput ai = AIInput.WithRandomLogic();
             IInput input = ai;
-            IView view = new StdOutDisplay();
+            View.Shared.IView view = new GUIDisplay();
             //give the View and Input to the Controller
             Controller controller = Controller.Instance(input, view);
             view.Display();
