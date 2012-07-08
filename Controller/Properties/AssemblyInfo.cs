@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Control")]
+[assembly: AssemblyTitle("Controller")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Neumont")]
-[assembly: AssemblyProduct("Control")]
-[assembly: AssemblyCopyright("Copyright © Neumont 2011")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Controller")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2f1d4328-612c-45d5-92f5-adf3a231b302")]
+[assembly: Guid("f5b787f2-bb56-4770-bde5-449ab80590f0")]
 
 // Version information for an assembly consists of the following four values:
 //

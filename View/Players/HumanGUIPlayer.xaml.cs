@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using Control;
 using Model;
+using View.Shared;
 using Color = Model.Color;
 
-namespace View
+namespace View.Players
 {
 	/// <summary>
 	/// Interaction logic for HumanGUIPlayer.xaml

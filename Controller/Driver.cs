@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using View.Input;
+using View.Shared;
+using View.Views;
 
 namespace View
 {
@@ -14,7 +14,7 @@ namespace View
             //HumanGUIPlayer gui = new HumanGUIPlayer();
             AIInput ai = AIInput.WithRandomLogic();
             IInput input = ai;
-            IView view = new GUIDisplay();
+            IView view = new StdOutDisplay();
             //give the View and Input to the Controller
             Controller controller = Controller.Instance(input, view);
             view.Display();

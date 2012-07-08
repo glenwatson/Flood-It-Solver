@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using System.Linq;
 using Model;
+using View.Shared;
 
-namespace View
+namespace View.Players
 {
     public class HumanCLIPlayer : IInput
     {

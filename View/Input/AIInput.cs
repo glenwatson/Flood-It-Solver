@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Model;
+using View.Shared;
 
-namespace View
+namespace View.Input
 {
     public class AIInput : IInput
     {

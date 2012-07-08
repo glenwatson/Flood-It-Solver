@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using View;
+﻿using View.Shared;
 
-namespace Model
+namespace Model.Players
 {
     /// <summary>
     /// Kind of a 2nd controller. 

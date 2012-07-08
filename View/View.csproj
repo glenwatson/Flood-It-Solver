@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D8DEC4D5-4160-4910-AF49-980EBADC0380}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>View</RootNamespace>
     <AssemblyName>View</AssemblyName>
@@ -55,37 +55,24 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIInput.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="Driver.cs" />
-    <Compile Include="GUIDisplay.xaml.cs">
-      <DependentUpon>GUIDisplay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanCLIPlayer.cs" />
-    <Compile Include="IInput.cs" />
-    <Compile Include="IInputHandler.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="IView.cs" />
-    <Compile Include="StdOutDisplay.cs" />
-    <Page Include="BoardViewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GUIDisplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanGUIPlayer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="BoardViewControl.xaml.cs">
-      <DependentUpon>BoardViewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanGUIPlayer.xaml.cs">
+    <Compile Include="Controller\Controller.cs" />
+    <Compile Include="Controller\IInputHandler.cs" />
+    <Compile Include="Input\AIInput.cs" />
+    <Compile Include="Players\HumanCLIPlayer.cs" />
+    <Compile Include="Players\HumanGUIPlayer.xaml.cs">
       <DependentUpon>HumanGUIPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Players\Player.cs" />
+    <Compile Include="Shared\IInput.cs" />
+    <Compile Include="Shared\IView.cs" />
+    <Compile Include="Views\BoardViewControl.xaml.cs">
+      <DependentUpon>BoardViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GUIDisplay.xaml.cs">
+      <DependentUpon>GUIDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StdOutDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -116,6 +103,21 @@
       <Project>{72E35D12-C2B6-4609-B4AF-B78C280CEB64}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Players\HumanGUIPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BoardViewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GUIDisplay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Model;
+using View.Shared;
 
-namespace View
+namespace View.Views
 {
     public class StdOutDisplay : IView
     {

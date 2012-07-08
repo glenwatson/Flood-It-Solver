@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Model;
 
-namespace View
+namespace View.Shared
 {
     public interface IView
     {

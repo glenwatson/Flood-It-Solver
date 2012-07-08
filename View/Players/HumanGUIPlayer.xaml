@@ -1,7 +1,7 @@
-﻿<Window x:Class="View.HumanGUIPlayer"
+﻿<Window x:Class="View.Players.HumanGUIPlayer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:u="clr-namespace:View"
+        xmlns:u="clr-namespace:View.Views"
         Title="HumanGUIPlayer" >
     <DockPanel>
         <Grid x:Name="outerGrid">
@@ -9,7 +9,7 @@
                 <RowDefinition />
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <u:BoardView x:Name="boardView"></u:BoardView>
+            <u:BoardView x:Name="boardView" />
             <Grid x:Name="grdInput" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
