@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using Model;
 using View.Input.AI;
@@ -10,7 +11,7 @@ namespace View.Input
     public class AIInput : IInput
     {
         private readonly AILogic _logic;
-        private Thread _logicThread;
+        private BackgroundWorker _logicThread;
         private bool _shouldRun = true;
 
         public static AIInput WithRandomLogic()
@@ -25,24 +26,26 @@ namespace View.Input
         private AIInput(AILogic logic)
         {
             _logic = logic;
-            _logicThread = new Thread(StartQueryingLogic);
+            _logicThread = new BackgroundWorker();
+            _logicThread.DoWork += StartQueryingLogic;
         }
 
-        private void StartQueryingLogic()
+        private void StartQueryingLogic(object sender, DoWorkEventArgs e)
         {
             while (_shouldRun)
             {
+                //Thread.Sleep(500);
                 Color colorChosen = _logic.ChooseColor(GetController().GetUpdate()); //reaches across other thread to get the current Board
-                Thread.Sleep(1000);
-                ChosenColorQueue.Instance().Enqueue(colorChosen);
+                GetController().PickColor(colorChosen);
+                //ChosenColorQueue.Instance().Enqueue(colorChosen);
             }
         }
 
         public void Start()
         {
             _shouldRun = true;
-            _logicThread.Start();
-            WaitForColorChoices();
+            _logicThread.RunWorkerAsync();
+            //WaitForColorChoices();
         }
         public void Stop()
         {

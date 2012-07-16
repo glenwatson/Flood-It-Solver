@@ -21,18 +21,31 @@ namespace View.Input.AI
         private Queue<Color> _queue = new Queue<Color>();
         public void Enqueue(Color color)
         {
-            Monitor.Enter(_queue);
-            _queue.Enqueue(color);
-            Monitor.Exit(_queue); //signal that something has been inserted
+            try
+            {
+                Monitor.Enter(_queue);
+                _queue.Enqueue(color);
+                Monitor.Pulse(_queue);
+            }
+            finally
+            {
+                Monitor.Exit(_queue); //signal that something has been inserted
+            }
         }
         public Color Dequeue()
         {
             Color color;
-            Monitor.Enter(_queue);
-            if (_queue.Count < 1)
-                Monitor.Wait(_queue);
-            color = _queue.Dequeue();
-            Monitor.Exit(_queue);
+            try
+            {
+                Monitor.Enter(_queue);
+                if (_queue.Count < 1)
+                    Monitor.Wait(_queue);
+                color = _queue.Dequeue();
+            }
+            finally
+            {
+                Monitor.Exit(_queue);
+            }
             return color;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
 using View.Input;
 using View.Players;
 using View.Shared;
@@ -18,14 +18,16 @@ namespace View
         {
             //create View and Input
             //HumanGUIPlayer gui = new HumanGUIPlayer();
-            AIInput ai = AIInput.WithRandomLogic();
+            AIInput ai = AIInput.WithAnalysisLogic();
             IInput input = ai;
-            View.Shared.IView view = new GUIDisplay();
+            GUIDisplay guiDisplay = new GUIDisplay();
+            IView view = guiDisplay;
             //give the View and Input to the Controller
             Controller controller = Controller.Instance(input, view);
-            view.Display();
 
             ai.Start();
+            view.Display();
+
         }
     }
 }

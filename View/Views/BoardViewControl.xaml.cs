@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Color = Model.Color;
 
 namespace View.Views
@@ -23,7 +24,10 @@ namespace View.Views
             {
                 _board = value;
                 if (_initialized)
+                {
                     UpdateView();
+                    //grdBoard.Dispatcher.Invoke(UpdateView, DispatcherPriority.Render);
+                }
                 else
                     SetupBoard();
             } 
@@ -59,39 +63,46 @@ namespace View.Views
             _initialized = true;
         }
 
-        public void UpdateView()
+        private void UpdateView()
         {
             if (!_initialized)
                 throw new Exception("BoardView isn't initialized. Set the Board first.");
-            foreach (var objChild in grdBoard.Children)
+            try
             {
-                var child = objChild as Rectangle;
-                int col = Grid.GetColumn(child);
-                int row = Grid.GetRow(child);
-                var color = Brushes.Black;
-                switch (Board[row, col])
+                grdBoard.Dispatcher.Invoke(delegate()
                 {
-                    case Color.Red:
-                        color = Brushes.Red;
-                        break;
-                    case Color.Blue:
-                        color = Brushes.Blue;
-                        break;
-                    case Color.Green:
-                        color = Brushes.Green;
-                        break;
-                    case Color.Orange:
-                        color = Brushes.Orange;
-                        break;
-                    case Color.Purple:
-                        color = Brushes.Purple;
-                        break;
-                    case Color.Yellow:
-                        color = Brushes.Yellow;
-                        break;
-                }
-                child.Fill = color;
+                    foreach (var objChild in grdBoard.Children)
+                    {
+                        var child = objChild as Rectangle;
+                        int col = Grid.GetColumn(child);
+                        int row = Grid.GetRow(child);
+                        var color = Brushes.Black;
+                        switch (Board[row, col])
+                        {
+                            case Color.Red:
+                                color = Brushes.Red;
+                                break;
+                            case Color.Blue:
+                                color = Brushes.Blue;
+                                break;
+                            case Color.Green:
+                                color = Brushes.Green;
+                                break;
+                            case Color.Orange:
+                                color = Brushes.Orange;
+                                break;
+                            case Color.Purple:
+                                color = Brushes.Purple;
+                                break;
+                            case Color.Yellow:
+                                color = Brushes.Yellow;
+                                break;
+                        }
+                        child.Fill = color;
+                    }
+                });
             }
+            catch { }
         }
         private Color BrushToColor(Brush brush)
         {

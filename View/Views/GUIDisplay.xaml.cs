@@ -18,7 +18,7 @@ namespace View.Views
         #region IView
         public void Display()
         {
-            Show();
+            new Application().Run(this);
         }
         public void BoardUpdated(Color[,] board)
         {

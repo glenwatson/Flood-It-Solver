@@ -14,8 +14,9 @@ namespace View.Input.AI.Logic
             //TODO: analyse the board and choose a color
             Color bestColor = Color.Red;
             int greatestSurfaceArea = 0;
-            foreach (var color in board)
+            foreach (Object colorObj in Enum.GetValues(typeof(Color)))
             {
+                Color color = (Color)colorObj;
                 Board boardLogic = new Board(board);
                 boardLogic.Pick(color);
                 int surfaceArea = EdgeCoverage(boardLogic.GetCopyOfBoard());
