@@ -70,6 +70,8 @@
     <Compile Include="Input\AI\Logic\DSModel\Point.cs" />
     <Compile Include="Input\AI\Logic\DSModel\SetRepresentative.cs" />
     <Compile Include="Input\AI\Logic\Extentions\BoardExtentions.cs" />
+    <Compile Include="Input\AI\Logic\MapModel\MapBuilder.cs" />
+    <Compile Include="Input\AI\Logic\MapModel\MapNode.cs" />
     <Compile Include="Input\AI\Logic\RandomLogic.cs" />
     <Compile Include="Input\StdInInput.cs" />
     <Compile Include="Players\HumanGUIPlayer.xaml.cs">

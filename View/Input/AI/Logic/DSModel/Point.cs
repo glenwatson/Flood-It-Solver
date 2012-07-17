@@ -8,24 +8,36 @@ namespace View.Input.AI.Logic.DSModel
 {
     struct Point
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        private int _x;
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        private int _y;
+        public int Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
 
         public Point(int x, int y)
         {
-            X = x;
-            Y = y;
+            _x = x;
+            _y = y;
         }
 
         public bool IsTouching(Point point)
         {
-            if (this.X == point.X)
+            if (this._x == point._x)
             {
-                return Math.Abs(this.Y - point.Y) == 1;
+                return Math.Abs(this._y - point._y) == 1;
             }
-            if (this.Y == point.Y)
+            if (this._y == point._y)
             {
-                return Math.Abs(this.X - point.X) == 1;
+                return Math.Abs(this._x - point._x) == 1;
             }
             return false;
         }
@@ -35,7 +47,7 @@ namespace View.Input.AI.Logic.DSModel
             if (obj is Point)
             {
                 Point p = (Point)obj;
-                return this.X == p.X && this.Y == p.Y;
+                return this._x == p._x && this._y == p._y;
             }
             return false;
         }
