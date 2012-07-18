@@ -9,12 +9,12 @@ namespace View.Input.AI.Logic.MapModel
 {
     class MapNode
     {
-        private Color _color;
+        public Color Color { get; private set; }
         private List<MapNode> _neighbors = new List<MapNode>();
 
         public MapNode(Color color)
         {
-            _color = color;
+            Color = color;
         }
 
         public void AddNeighbor(MapNode node)

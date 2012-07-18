@@ -9,6 +9,7 @@ namespace View.Input.AI.Logic
 {
     public abstract class AILogic
     {
-        public abstract Color ChooseColor(Color[,] board);
+        //protected AILogic() { }
+        public abstract SuggestedMoves ChooseColor(Color[,] board);
     }
 }

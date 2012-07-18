@@ -9,7 +9,7 @@ namespace View.Input.AI.Logic
 {
     class AnalysisLogic : AILogic
     {
-        public override Color ChooseColor(Color[,] board)
+        public override SuggestedMoves ChooseColor(Color[,] board)
         {
             //TODO: analyse the board and choose a color
             Color bestColor = Color.Red;
@@ -26,7 +26,7 @@ namespace View.Input.AI.Logic
                     bestColor = color;
                 }
             }
-            return bestColor;
+            return new SuggestedMoves ( bestColor );
         }
         private int EdgeCoverage(Color[,] board)
         {

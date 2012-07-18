@@ -22,6 +22,18 @@ namespace View.Input
         {
             return new AIInput(new AnalysisLogic());
         }
+        public static AIInput WithMoveTowardsFarthestNodeLogic()
+        {
+            return new AIInput(new MoveTowardsFarthestNodeLogic());
+        }
+        public static AIInput WithIncreaseSurfaceAreaLogic()
+        {
+            return new AIInput(new IncreaseSurfaceAreaLogic(-1));
+        }
+        public static AIInput WithClearAColorLogic()
+        {
+            return new AIInput(new ClearAColorLogic());
+        }
 
         private AIInput(AILogic logic)
         {
@@ -35,8 +47,10 @@ namespace View.Input
             while (_shouldRun)
             {
                 //Thread.Sleep(500);
-                Color colorChosen = _logic.ChooseColor(GetController().GetUpdate()); //reaches across other thread to get the current Board
-                GetController().PickColor(colorChosen);
+                SuggestedMoves colorsChosen = _logic.ChooseColor(GetController().GetUpdate()); //reaches across other thread to get the current Board
+                Controller controller = GetController();
+                foreach (Color colorChosen in colorsChosen.BestMoves)
+                    controller.PickColor(colorChosen);
                 //ChosenColorQueue.Instance().Enqueue(colorChosen);
             }
         }

@@ -10,11 +10,11 @@ namespace View.Input.AI.Logic
     class RandomLogic : AILogic
     {
         Random rand = new Random();
-        public override Color ChooseColor(Color[,] board)
+        public override SuggestedMoves ChooseColor(Color[,] board)
         {
             var randInt = rand.Next(0, Enum.GetValues(typeof(Color)).Length);
             var ans = (Color)randInt;
-            return ans;
+            return new SuggestedMoves(ans);
         }
     }
 }
