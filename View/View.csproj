@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\IInputHandler.cs" />
+    <Compile Include="Extentions\BoardExtentions.cs" />
     <Compile Include="Input\AIInput.cs" />
     <Compile Include="Input\AI\ChosenColorQueue.cs" />
     <Compile Include="Input\AI\Logic\AILogic.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Input\AI\Logic\DSModel\DisjointSet.cs" />
     <Compile Include="Input\AI\Logic\DSModel\Point.cs" />
     <Compile Include="Input\AI\Logic\DSModel\SetRepresentative.cs" />
-    <Compile Include="Input\AI\Logic\Extentions\BoardExtentions.cs" />
     <Compile Include="Input\AI\Logic\Extentions\MapModelExtentions.cs" />
     <Compile Include="Input\AI\Logic\IncreaseSurfaceAreaLogic.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapBuilder.cs" />
@@ -125,9 +125,7 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extentions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Players\HumanGUIPlayer.xaml">
       <SubType>Designer</SubType>

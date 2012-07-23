@@ -1,6 +1,6 @@
 ﻿using Model;
 
-namespace View.Input.AI.Logic.Extentions
+namespace View.Extentions
 {
     static class BoardExtentions
     {

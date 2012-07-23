@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
-using View.Input.AI.Logic.Extentions;
+using View.Extentions;
 
 namespace View.Input.AI.Logic.MapModel
 {
