@@ -64,7 +64,6 @@
     <Compile Include="Input\AIInput.cs" />
     <Compile Include="Input\AI\ChosenColorQueue.cs" />
     <Compile Include="Input\AI\Logic\AILogic.cs" />
-    <Compile Include="Input\AI\Logic\AnalysisLogic.cs" />
     <Compile Include="Input\AI\Logic\ClearAColorLogic.cs" />
     <Compile Include="Input\AI\Logic\DSModel\DisjoinSetBuilder.cs" />
     <Compile Include="Input\AI\Logic\DSModel\DisjoinSetCollection.cs" />
@@ -72,7 +71,9 @@
     <Compile Include="Input\AI\Logic\DSModel\Point.cs" />
     <Compile Include="Input\AI\Logic\DSModel\SetRepresentative.cs" />
     <Compile Include="Input\AI\Logic\Extentions\MapModelExtentions.cs" />
+    <Compile Include="Input\AI\Logic\GridEdgeCoverage.cs" />
     <Compile Include="Input\AI\Logic\IncreaseSurfaceAreaLogic.cs" />
+    <Compile Include="Input\AI\Logic\MapEdgeCoverage.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapBuilder.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapNode.cs" />
     <Compile Include="Input\AI\Logic\MoveTowardsFarthestNodeLogic.cs" />

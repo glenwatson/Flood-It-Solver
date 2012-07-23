@@ -20,7 +20,7 @@ namespace View.Input
         }
         public static AIInput WithAnalysisLogic()
         {
-            return new AIInput(new AnalysisLogic());
+            return new AIInput(new GridEdgeCoverage());
         }
         public static AIInput WithMoveTowardsFarthestNodeLogic()
         {

@@ -8,23 +8,27 @@ using View.Extentions;
 
 namespace View.Input.AI.Logic
 {
-    class AnalysisLogic : AILogic
+    class GridEdgeCoverage : AILogic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
+            Color currentColor = board[0, 0];
             //TODO: analyse the board and choose a color
             Color bestColor = Color.Red;
             int greatestSurfaceArea = 0;
             foreach (Object colorObj in Enum.GetValues(typeof(Color)))
             {
                 Color color = (Color)colorObj;
-                Board boardLogic = new Board(board);
-                boardLogic.Pick(color);
-                int surfaceArea = EdgeCoverage(boardLogic.GetCopyOfBoard());
-                if (surfaceArea > greatestSurfaceArea)
+                if (color != currentColor)
                 {
-                    greatestSurfaceArea = surfaceArea;
-                    bestColor = color;
+                    Board boardLogic = new Board(board);
+                    boardLogic.Pick(color);
+                    int surfaceArea = EdgeCoverage(boardLogic.GetCopyOfBoard());
+                    if (surfaceArea > greatestSurfaceArea)
+                    {
+                        greatestSurfaceArea = surfaceArea;
+                        bestColor = color;
+                    }
                 }
             }
             return new SuggestedMoves ( bestColor );
