@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Color = Model.Color;
+using View.Extentions;
 
 namespace View.Views
 {
@@ -40,11 +41,11 @@ namespace View.Views
         private void SetupBoard()
         {
             //clear out the board
-            grdBoard.RowDefinitions.Clear();
-            for (int i = 0; i < Board.GetLength(0); i++)
-                grdBoard.ColumnDefinitions.Add(new ColumnDefinition());
             grdBoard.ColumnDefinitions.Clear();
-            for (int i = 0; i < Board.GetLength(1); i++)
+            for (int i = 0; i < Board.Width(); i++)
+                grdBoard.ColumnDefinitions.Add(new ColumnDefinition());
+            grdBoard.RowDefinitions.Clear();            
+            for (int i = 0; i < Board.Height(); i++)
                 grdBoard.RowDefinitions.Add(new RowDefinition());
 
             for (int col = 0; col < grdBoard.ColumnDefinitions.Count; col++)

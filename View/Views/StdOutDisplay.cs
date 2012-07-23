@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Model;
+using View.Extentions;
 using View.Shared;
 
 namespace View.Views
@@ -29,13 +28,13 @@ namespace View.Views
 
         public static void PrintBoard(Color[,] board)
         {
-            int initCap = (board.GetLength(0) * board.GetLength(1)) * 2;
-            StringBuilder sb = new StringBuilder(initCap);
-            for (int y = 0; y < board.GetLength(0); y++)
+            int estimatedLength = (board.GetLength(0) * board.GetLength(1)) * 2;
+            StringBuilder sb = new StringBuilder(estimatedLength);
+            for (int y = 0; y < board.Height(); y++)
             {
-                for (int x = 0; x < board.GetLength(1); x++)
+                for (int x = 0; x < board.Width(); x++)
                 {
-                    sb.Append((char) ColorToLetter(board[y, x]));
+                    sb.Append((char) ColorToLetter(board.GetAt(x, y)));
                     sb.Append(' ');
                 }
                 sb.AppendLine();

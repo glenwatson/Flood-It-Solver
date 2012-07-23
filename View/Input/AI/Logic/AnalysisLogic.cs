@@ -31,42 +31,55 @@ namespace View.Input.AI.Logic
         }
         private int EdgeCoverage(Color[,] board)
         {
-            bool[,] visited = new bool[board.Height(), board.Width()];
-            int covered = EdgeCoverage(0, 0, visited, board);
+            bool[,] continuousVisited = new bool[board.Height(), board.Width()];
+            bool[,] edgesVisited = new bool[board.Height(), board.Width()];
+            int covered = EdgeCoverage(0, 0, continuousVisited, edgesVisited, board);
             return covered;
         }
-        private int EdgeCoverage(int x, int y, bool[,] visited, Color[,] board)
+        private int EdgeCoverage(int x, int y, bool[,] continuousVisited, bool[,] edgesVisited, Color[,] board)
         {
-            visited[x, y] = true;
-            Color thisColor = board[y, x];
+            continuousVisited.SetAt(x, y, true);
+            Color thisColor = board.GetAt(x, y);
             int result = 0;
-            if (board.CanGetLeft(x) && !visited[x - 1, y])
+            if (board.CanGetLeft(x) && !continuousVisited.GetLeftOf(x, y))
             {
                 if (thisColor == board.GetLeftOf(x, y))
-                    result += EdgeCoverage(x - 1, y, visited, board);
-                else
+                    result += EdgeCoverage(x - 1, y, continuousVisited, edgesVisited, board);
+                else if (!edgesVisited.GetLeftOf(x, y))
+                {
+                    edgesVisited.SetLeftOf(x, y, true);
                     result++;
+                }
             }
-            if (board.CanGetAbove(y) && !visited[x, y - 1])
+            if (board.CanGetAbove(y) && !continuousVisited.GetAboveOf(x, y))
             {
                 if (thisColor == board.GetAboveOf(x, y))
-                    result += EdgeCoverage(x, y - 1, visited, board);
-                else
+                    result += EdgeCoverage(x, y - 1, continuousVisited, edgesVisited, board);
+                else if (!edgesVisited.GetAboveOf(x, y))
+                {
+                    edgesVisited.SetAboveOf(x, y, true);
                     result++;
+                }
             }
-            if (board.CanGetRight(x) && !visited[x + 1, y])
+            if (board.CanGetRight(x) && !continuousVisited.GetRightOf(x, y))
             {
                 if (thisColor == board.GetRightOf(x, y))
-                    result += EdgeCoverage(x + 1, y, visited, board);
-                else
+                    result += EdgeCoverage(x + 1, y, continuousVisited, edgesVisited, board);
+                else if (!edgesVisited.GetRightOf(x, y))
+                {
+                    edgesVisited.SetRightOf(x, y, true);
                     result++;
+                }
             }
-            if (board.CanGetBelow(y) && !visited[x, y + 1])
+            if (board.CanGetBelow(y) && !continuousVisited.GetBelowOf(x, y))
             {
                 if (thisColor == board.GetBelowOf(x, y))
-                    result += EdgeCoverage(x, y + 1, visited, board);
-                else
+                    result += EdgeCoverage(x, y + 1, continuousVisited, edgesVisited, board);
+                else if (!edgesVisited.GetBelowOf(x, y))
+                {
+                    edgesVisited.SetBelowOf(x, y, true);
                     result++;
+                }
             }
             return result;
         }

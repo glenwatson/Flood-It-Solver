@@ -12,7 +12,7 @@ namespace View.Input.AI.Logic.MapModel
     {
         public static MapNode BuildMap(Color[,] board)
         {
-            MapNode head = new MapNode(board.GetColorAt(0,0));
+            MapNode head = new MapNode(board.GetAt(0,0));
             //Used as lookup for with node a point belongs to.
             MapNode[,] lookup = new MapNode[board.Height(), board.Width()];
             lookup[0, 0] = head;
@@ -22,8 +22,8 @@ namespace View.Input.AI.Logic.MapModel
                 for (int x = 0; x < board.Width(); x++)
                 {
                     //Create MapNode
-                    bool isLeftSame = board.CanGetLeft(x) && board.GetColorAt(x, y) == board.GetLeftOf(x, y);
-                    bool isAboveSame = board.CanGetAbove(y) && board.GetColorAt(x, y) == board.GetAboveOf(x, y);
+                    bool isLeftSame = board.CanGetLeft(x) && board.GetAt(x, y) == board.GetLeftOf(x, y);
+                    bool isAboveSame = board.CanGetAbove(y) && board.GetAt(x, y) == board.GetAboveOf(x, y);
 
                     if (isLeftSame && isAboveSame) //check above & to the left
                     {
@@ -42,14 +42,14 @@ namespace View.Input.AI.Logic.MapModel
                     }
                     else
                     {
-                        lookup[x, y] = new MapNode(board.GetColorAt(x, y));
+                        lookup[x, y] = new MapNode(board.GetAt(x, y));
                     }
 
                     //Add neighbors
-                    bool isLeftNotSame = board.CanGetLeft(x) && board.GetColorAt(x, y) != board.GetLeftOf(x, y);
-                    bool isAboveNotSame = board.CanGetAbove(y) && board.GetColorAt(x, y) != board.GetAboveOf(x, y);
-                    bool isRightNotSame = board.CanGetRight(x) && board.GetColorAt(x, y) != board.GetRightOf(x, y);
-                    bool isBelowNotSame = board.CanGetBelow(y) && board.GetColorAt(x, y) != board.GetBelowOf(x, y);
+                    bool isLeftNotSame = board.CanGetLeft(x) && board.GetAt(x, y) != board.GetLeftOf(x, y);
+                    bool isAboveNotSame = board.CanGetAbove(y) && board.GetAt(x, y) != board.GetAboveOf(x, y);
+                    bool isRightNotSame = board.CanGetRight(x) && board.GetAt(x, y) != board.GetRightOf(x, y);
+                    bool isBelowNotSame = board.CanGetBelow(y) && board.GetAt(x, y) != board.GetBelowOf(x, y);
                     MapNode currentNode = lookup[x, y];
                     if (isAboveNotSame)
                     {
