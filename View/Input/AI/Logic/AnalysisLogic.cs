@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+using View.Input.AI.Logic.Extentions;
 
 namespace View.Input.AI.Logic
 {
@@ -30,40 +31,40 @@ namespace View.Input.AI.Logic
         }
         private int EdgeCoverage(Color[,] board)
         {
-            bool[,] visited = new bool[board.GetLength(0), board.GetLength(1)];
+            bool[,] visited = new bool[board.Height(), board.Width()];
             int covered = EdgeCoverage(0, 0, visited, board);
             return covered;
         }
-        private int EdgeCoverage(int y, int x, bool[,] visited, Color[,] board)
+        private int EdgeCoverage(int x, int y, bool[,] visited, Color[,] board)
         {
-            visited[y, x] = true;
+            visited[x, y] = true;
             Color thisColor = board[y, x];
             int result = 0;
-            if (x - 1 >= 0 && !visited[y, x - 1])
+            if (board.CanGetLeft(x) && !visited[x - 1, y])
             {
-                if (thisColor == board[y, x - 1])
-                    result += EdgeCoverage(y, x - 1, visited, board);
+                if (thisColor == board.GetLeftOf(x, y))
+                    result += EdgeCoverage(x - 1, y, visited, board);
                 else
                     result++;
             }
-            if (y - 1 >= 0 && !visited[y - 1, x])
+            if (board.CanGetAbove(y) && !visited[x, y - 1])
             {
-                if (thisColor == board[y - 1, x])
-                    result += EdgeCoverage(y - 1, x, visited, board);
+                if (thisColor == board.GetAboveOf(x, y))
+                    result += EdgeCoverage(x, y - 1, visited, board);
                 else
                     result++;
             }
-            if (x + 1 < board.GetLength(1) && !visited[y, x + 1])
+            if (board.CanGetRight(x) && !visited[x + 1, y])
             {
-                if (thisColor == board[y, x + 1])
-                    result += EdgeCoverage(y, x + 1, visited, board);
+                if (thisColor == board.GetRightOf(x, y))
+                    result += EdgeCoverage(x + 1, y, visited, board);
                 else
                     result++;
             }
-            if (y + 1 < board.GetLength(0) && !visited[y + 1, x])
+            if (board.CanGetBelow(y) && !visited[x, y + 1])
             {
-                if (thisColor == board[y + 1, x])
-                    result += EdgeCoverage(y + 1, x, visited, board);
+                if (thisColor == board.GetBelowOf(x, y))
+                    result += EdgeCoverage(x, y + 1, visited, board);
                 else
                     result++;
             }

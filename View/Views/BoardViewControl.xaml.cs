@@ -42,14 +42,14 @@ namespace View.Views
             //clear out the board
             grdBoard.RowDefinitions.Clear();
             for (int i = 0; i < Board.GetLength(0); i++)
-                grdBoard.RowDefinitions.Add(new RowDefinition());
+                grdBoard.ColumnDefinitions.Add(new ColumnDefinition());
             grdBoard.ColumnDefinitions.Clear();
             for (int i = 0; i < Board.GetLength(1); i++)
-                grdBoard.ColumnDefinitions.Add(new ColumnDefinition());
+                grdBoard.RowDefinitions.Add(new RowDefinition());
 
-            for (int row = 0; row < grdBoard.RowDefinitions.Count; row++)
+            for (int col = 0; col < grdBoard.ColumnDefinitions.Count; col++)
             {
-                for (int col = 0; col < grdBoard.ColumnDefinitions.Count; col++)
+                for (int row = 0; row < grdBoard.RowDefinitions.Count; row++)
                 {
                     var color = ColorToBrush(Board[row, col]);
                     var rect = new Rectangle { Stroke = Brushes.Azure, Fill = color, Margin = new Thickness(-1), };
@@ -67,8 +67,8 @@ namespace View.Views
         {
             if (!_initialized)
                 throw new Exception("BoardView isn't initialized. Set the Board first.");
-            try
-            {
+            //try
+            //{
                 grdBoard.Dispatcher.Invoke(delegate()
                 {
                     foreach (var objChild in grdBoard.Children)
@@ -101,8 +101,8 @@ namespace View.Views
                         child.Fill = color;
                     }
                 });
-            }
-            catch { }
+            //}
+            //catch { }
         }
         private Color BrushToColor(Brush brush)
         {

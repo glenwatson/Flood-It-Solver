@@ -44,7 +44,7 @@ namespace Model
         
         public Board(Color[,] colors)
         {
-            Colors = colors;
+            Colors = (Color[,])colors.Clone();
             FireBoardUpdated();
         }
 
@@ -66,7 +66,7 @@ namespace Model
         private void Randomize()
 		{
 			var colorValues = Enum.GetValues(typeof(Color));
-			Random rand = new Random();
+			Random rand = new Random(1);
 			for (int w = 0; w < BoardWidth; w++)
 				for (int h = 0; h < BoardHeigth; h++)
 				{

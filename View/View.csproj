@@ -125,7 +125,9 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extentions\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Players\HumanGUIPlayer.xaml">
       <SubType>Designer</SubType>
