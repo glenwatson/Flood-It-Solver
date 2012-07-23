@@ -9,10 +9,10 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
-    class IncreaseSurfaceAreaLogic : AILogic
+    class IncreaseSurfaceAreaMapLogic : AILogic
     {
         private int _lookAheadLevel;
-        public IncreaseSurfaceAreaLogic(int lookAheadLevel)
+        public IncreaseSurfaceAreaMapLogic(int lookAheadLevel)
         {
             _lookAheadLevel = lookAheadLevel;
         }

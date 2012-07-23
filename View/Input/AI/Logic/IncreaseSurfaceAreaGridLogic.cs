@@ -9,7 +9,7 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
-    class GridEdgeCoverage : AILogic
+    class IncreaseSurfaceAreaGridLogic : AILogic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {

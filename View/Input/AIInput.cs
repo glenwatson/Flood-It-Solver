@@ -19,17 +19,17 @@ namespace View.Input
         {
             return new AIInput(new RandomLogic());
         }
-        public static AIInput WithAnalysisLogic()
-        {
-            return new AIInput(new GridEdgeCoverage());
-        }
         public static AIInput WithMoveTowardsFarthestNodeLogic()
         {
             return new AIInput(new MoveTowardsFarthestNodeLogic());
         }
-        public static AIInput WithIncreaseSurfaceAreaLogic()
+        public static AIInput IncreaseSurfaceAreaMapLogic()
         {
-            return new AIInput(new IncreaseSurfaceAreaLogic(-1));
+            return new AIInput(new IncreaseSurfaceAreaMapLogic(-1));
+        }
+        public static AIInput WithIncreaseSurfaceAreaGridLogic()
+        {
+            return new AIInput(new IncreaseSurfaceAreaGridLogic());
         }
         public static AIInput WithClearAColorLogic()
         {
