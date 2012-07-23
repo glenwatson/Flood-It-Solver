@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 
-namespace View.Input.AI.Logic
+namespace View.Input.AI.Logic.Moves
 {
     public class SuggestedMove
     {

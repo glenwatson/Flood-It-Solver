@@ -4,6 +4,7 @@ using System.Threading;
 using Model;
 using View.Input.AI;
 using View.Input.AI.Logic;
+using View.Input.AI.Logic.Moves;
 using View.Shared;
 
 namespace View.Input
