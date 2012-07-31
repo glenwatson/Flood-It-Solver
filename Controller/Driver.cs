@@ -18,7 +18,7 @@ namespace View
         {
             //create View and Input
             //HumanGUIPlayer gui = new HumanGUIPlayer();
-            AIInput ai = AIInput.WithClearAColorLogic();
+            AIInput ai = AIInput.WithMoveTowardsFarthestNodeLogic();
             IInput input = ai;
             GUIDisplay guiDisplay = new GUIDisplay();
             IView view = guiDisplay;

@@ -12,7 +12,7 @@ namespace View.Input.AI.Logic.Extentions
         public static IEnumerable<MapNode> BFS(this MapNode head)
         {
             Queue<MapNode> frontLine = new Queue<MapNode>();
-            ISet<MapNode> visited = new SortedSet<MapNode>();
+            ISet<MapNode> visited = new HashSet<MapNode>(); //new SortedSet<MapNode>();
 
             frontLine.Enqueue(head);
             while (frontLine.Count > 0)

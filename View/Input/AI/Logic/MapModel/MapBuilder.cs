@@ -15,6 +15,7 @@ namespace View.Input.AI.Logic.MapModel
             //Used as lookup for with node a point belongs to.
             MapNode[,] lookup = new MapNode[board.Height(), board.Width()];
 
+            //build lookup
             for (int y = 0; y < board.Height(); y++)
             {
                 for (int x = 0; x < board.Width(); x++)
@@ -42,8 +43,14 @@ namespace View.Input.AI.Logic.MapModel
                     {
                         lookup.SetAt(x, y, new MapNode(board.GetAt(x, y)) );
                     }
+                }
+            }
 
-                    //Add neighbors
+            //Add neighbors
+            for (int y = 0; y < board.Height(); y++)
+            {
+                for (int x = 0; x < board.Width(); x++)
+                {
                     bool isLeftNotSame = board.CanGetLeft(x) && board.GetAt(x, y) != board.GetLeftOf(x, y);
                     bool isAboveNotSame = board.CanGetAbove(y) && board.GetAt(x, y) != board.GetAboveOf(x, y);
                     bool isRightNotSame = board.CanGetRight(x) && board.GetAt(x, y) != board.GetRightOf(x, y);
