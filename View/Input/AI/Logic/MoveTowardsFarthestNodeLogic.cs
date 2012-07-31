@@ -14,7 +14,7 @@ namespace View.Input.AI.Logic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            MapNode head = MapBuilder.BuildMap(board);
+            MapNode head = MapBuilder.BuildTree(board);
             MapNode farthestNode = head.BFS().Last();
             return new SuggestedMoves(farthestNode.Color);
         }

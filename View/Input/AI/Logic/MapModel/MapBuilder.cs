@@ -13,6 +13,40 @@ namespace View.Input.AI.Logic.MapModel
         public static MapNode BuildMap(Color[,] board)
         {
             //Used as lookup for with node a point belongs to.
+            MapNode[,] lookup = BuildLookupGrid(board);
+
+            AddMapNeighbors(lookup);
+
+            return lookup.GetAt(0, 0);
+        }
+
+        public static TreeNode BuildTree(Color[,] board)
+        {
+            //Used as lookup for with node a point belongs to.
+            MapNode[,] lookup = BuildLookupGrid(board);
+
+            MapNode[,] parents = AddTreeChildren(lookup);
+
+            return root;
+        }
+
+        private static TreeNode[,] ToTreeNode(MapNode[,] lookup)
+        {
+            TreeNode[,] treeLookup = new TreeNode[lookup.Height(), lookup.Width()];
+            for (int y = 0; y < lookup.Height(); y++)
+            {
+                for (int x = 0; x < lookup.Width(); x++)
+                {
+                    TreeNode treeNode = new TreeNode(lookup.GetAt(x, y).Color);
+                    treeLookup.SetAt(x, y, treeNode);
+                    throw new NotImplementedException("Doesn't keep the same reference for touching colors");
+                }
+            }
+            return treeLookup;
+        }
+
+        private static MapNode[,] BuildLookupGrid(Color[,] board)
+        {
             MapNode[,] lookup = new MapNode[board.Height(), board.Width()];
 
             //build lookup
@@ -41,20 +75,24 @@ namespace View.Input.AI.Logic.MapModel
                     }
                     else
                     {
-                        lookup.SetAt(x, y, new MapNode(board.GetAt(x, y)) );
+                        lookup.SetAt(x, y, new MapNode(board.GetAt(x, y)));
                     }
                 }
             }
+            return lookup;
+        }
 
+        private static void AddMapNeighbors(MapNode[,] lookup)
+        {
             //Add neighbors
-            for (int y = 0; y < board.Height(); y++)
+            for (int y = 0; y < lookup.Height(); y++)
             {
-                for (int x = 0; x < board.Width(); x++)
+                for (int x = 0; x < lookup.Width(); x++)
                 {
-                    bool isLeftNotSame = board.CanGetLeft(x) && board.GetAt(x, y) != board.GetLeftOf(x, y);
-                    bool isAboveNotSame = board.CanGetAbove(y) && board.GetAt(x, y) != board.GetAboveOf(x, y);
-                    bool isRightNotSame = board.CanGetRight(x) && board.GetAt(x, y) != board.GetRightOf(x, y);
-                    bool isBelowNotSame = board.CanGetBelow(y) && board.GetAt(x, y) != board.GetBelowOf(x, y);
+                    bool isLeftNotSame = lookup.CanGetLeft(x) && lookup.GetAt(x, y).Color != lookup.GetLeftOf(x, y).Color;
+                    bool isAboveNotSame = lookup.CanGetAbove(y) && lookup.GetAt(x, y).Color != lookup.GetAboveOf(x, y).Color;
+                    bool isRightNotSame = lookup.CanGetRight(x) && lookup.GetAt(x, y).Color != lookup.GetRightOf(x, y).Color;
+                    bool isBelowNotSame = lookup.CanGetBelow(y) && lookup.GetAt(x, y).Color != lookup.GetBelowOf(x, y).Color;
                     MapNode currentNode = lookup.GetAt(x, y);
                     if (isAboveNotSame)
                     {
@@ -74,8 +112,67 @@ namespace View.Input.AI.Logic.MapModel
                     }
                 }
             }
-
-            return lookup.GetAt(0, 0);
         }
+
+
+        class WaitingMapNode
+        {
+            public MapNode MapNode { get; set; }
+            public TreeNode Parent { get; set; }
+        }
+        private static MapNode[,] AddTreeChildren(MapNode[,] lookup)
+        {
+            MapNode[,] parents = new MapNode[lookup.Height(), lookup.Width()];
+            //TreeNode root = new TreeNode(lookup[0, 0].Color);
+            ////If it has a parent, it's been claimed by a parent node already
+            //bool[,] visited = new bool[lookup.Height(), lookup.Width()];
+            //Queue<WaitingMapNode> frontLine = new Queue<WaitingMapNode>();
+            //frontLine.Enqueue(new WaitingMapNode() { MapNode = root });
+
+            //while (frontLine.Count > 0)
+            //{
+            //    WaitingMapNode waiting = frontLine.Dequeue();
+            //    TreeNode node = new TreeNode(waiting.Parent, waiting.MapNode.Color);
+
+
+            //}
+
+            //Add children
+            for (int y = 0; y < lookup.Height(); y++)
+            {
+                for (int x = 0; x < lookup.Width(); x++)
+                {
+                    //visited.SetAt(x, y, true);
+                    bool isLeftNotSame = lookup.CanGetLeft(x) && lookup.GetAt(x, y).Color != lookup.GetLeftOf(x, y).Color;
+                    bool isAboveNotSame = lookup.CanGetAbove(y) && lookup.GetAt(x, y).Color != lookup.GetAboveOf(x, y).Color;
+                    bool isRightNotSame = lookup.CanGetRight(x) && lookup.GetAt(x, y).Color != lookup.GetRightOf(x, y).Color;
+                    bool isBelowNotSame = lookup.CanGetBelow(y) && lookup.GetAt(x, y).Color != lookup.GetBelowOf(x, y).Color;
+                    MapNode currentNode = lookup.GetAt(x, y);
+                    if (isAboveNotSame && parents.GetAboveOf(x, y) == null)//!visited.GetAboveOf(x, y))
+                    {
+                        parents.SetAboveOf(x, y, currentNode);
+                        currentNode.AddNeighbor(lookup.GetAboveOf(x, y));
+                    }
+                    if (isLeftNotSame && parents.GetLeftOf(x, y) == null)
+                    {
+                        parents.SetLeftOf(x, y, currentNode);
+                        currentNode.AddNeighbor(lookup.GetLeftOf(x, y));
+                    }
+                    if (isRightNotSame && parents.GetRightOf(x, y) == null)
+                    {
+                        parents.SetRightOf(x, y, currentNode);
+                        currentNode.AddNeighbor(lookup.GetRightOf(x, y));
+                    }
+                    if (isBelowNotSame && parents.GetBelowOf(x, y) == null)
+                    {
+                        parents.SetBelowOf(x, y, currentNode);
+                        currentNode.AddNeighbor(lookup.GetBelowOf(x, y));
+                    }
+                }
+            }
+
+            return parents;
+        }
+
     }
 }
