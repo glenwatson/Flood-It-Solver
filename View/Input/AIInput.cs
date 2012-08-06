@@ -47,7 +47,8 @@ namespace View.Input
         {
             while (_shouldRun)
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
+                Console.ReadLine();
                 SuggestedMoves colorsChosen = _logic.ChooseColor(GetController().GetUpdate()); //reaches across other thread to get the current Board
                 Controller controller = GetController();
                 foreach (Color colorChosen in colorsChosen.BestMoves)

@@ -10,7 +10,7 @@ namespace View.Input.AI.Logic.MapModel
     class MapNode
     {
         public Color Color { get; private set; }
-        private List<MapNode> _neighbors = new List<MapNode>();
+        private ISet<MapNode> _neighbors = new HashSet<MapNode>();
 
         public MapNode(Color color)
         {
@@ -22,14 +22,14 @@ namespace View.Input.AI.Logic.MapModel
             _neighbors.Add(node);
         }
 
-        public List<MapNode> GetNeighbors()
+        public ISet<MapNode> GetNeighbors()
         {
             return _neighbors;
         }
 
         public void Merge(MapNode node)
         {
-            this._neighbors.AddRange(node._neighbors);
+            this._neighbors.Concat(node._neighbors);
             node._neighbors.Clear(); //@OPTIMIZE We don't have to remove them, it should be understood that the node is invalid
         }
     }

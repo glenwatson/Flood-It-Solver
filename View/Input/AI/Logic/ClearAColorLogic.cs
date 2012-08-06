@@ -15,7 +15,7 @@ namespace View.Input.AI.Logic
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             MapNode head = MapBuilder.BuildMap(board);
-            List<MapNode> firstLayer = head.GetNeighbors();
+            ISet<MapNode> firstLayer = head.GetNeighbors();
             List<Color> possibleColorsToClear = firstLayer.Select(node => node.Color).ToList();
             
             IEnumerator<MapNode> breathFirstSearch = head.BFS().GetEnumerator();
@@ -30,7 +30,7 @@ namespace View.Input.AI.Logic
                 }
             }
             SuggestedMoves moves = new SuggestedMoves();
-            possibleColorsToClear.ForEach(color => moves.Add(new SuggestedMove(color)));
+            possibleColorsToClear.ForEach(color => moves.AddLast(new SuggestedMove(color)));
             return moves;
         }
     }

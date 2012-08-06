@@ -7,37 +7,31 @@ using Model;
 
 namespace View.Input.AI.Logic.MapModel
 {
-    class TreeNode : MapNode
+    class TreeNode
     {
-        private TreeNode _parent;
+        public TreeNode Parent { get; private set; }
+        public Color Color { get; private set; }
+        private ISet<TreeNode> _children = new HashSet<TreeNode>();
 
-        public TreeNode(Color color) : base(color)
-        {}
-
-        public TreeNode(TreeNode parent, Color color) : base(color)
+        public TreeNode(TreeNode parent, Color color)
         {
-            _parent = parent;
-        }
-
-        public TreeNode GetParent()
-        {
-            return _parent;
+            Color = color;
+            Parent = parent;
         }
 
         public IEnumerable<TreeNode> GetChildern()
         {
-            return GetNeighbors().Cast<TreeNode>(); //@OPTIMIZE mass casting
+            return _children.AsEnumerable();
         }
 
         public void AddChildern(TreeNode node)
         {
-            AddNeighbor(node);
+            _children.Add(node);
         }
 
         public void Merge(TreeNode node)
         {
-            base.Merge(node);
-            node._parent = null; //@OPTIMIZE see MapNode.Merge(MapNode)
+            throw new NotImplementedException("Rebalance?");
         }
     }
 }

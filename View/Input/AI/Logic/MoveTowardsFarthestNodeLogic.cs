@@ -14,9 +14,27 @@ namespace View.Input.AI.Logic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            MapNode head = MapBuilder.BuildTree(board);
-            MapNode farthestNode = head.BFS().Last();
-            return new SuggestedMoves(farthestNode.Color);
+            return new SuggestedMoves(GetPath(board).BestMoves.First());
         }
+
+        public SuggestedMoves GetPath(Color[,] board)
+        {
+            TreeNode head = MapBuilder.BuildTree(board);
+            TreeNode farthestNode = head.BFS().Last();
+
+            //Follow the path back to the beginning
+            SuggestedMoves suggestedMoves = new SuggestedMoves();
+
+            TreeNode currentNode = farthestNode;
+            while (currentNode.Parent != null)
+            {
+                suggestedMoves.AddFirst(new SuggestedMove(currentNode.Color));
+                currentNode = currentNode.Parent;
+            }
+
+            return suggestedMoves;
+        }
+
+
     }
 }

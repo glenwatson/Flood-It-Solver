@@ -9,7 +9,7 @@ namespace View.Input.AI.Logic.Moves
 {
     public class SuggestedMoves
     {
-        private List<SuggestedMove> moves = new List<SuggestedMove>();
+        private LinkedList<SuggestedMove> moves = new LinkedList<SuggestedMove>();
 
         public IEnumerable<Color> BestMoves { get { return moves.Select(move => move.Ordered.First().Color); }}
 
@@ -17,12 +17,22 @@ namespace View.Input.AI.Logic.Moves
 
         public SuggestedMoves(Color color)
         {
-            moves.Add(new SuggestedMove(color));
+            moves.AddLast(new SuggestedMove(color));
         }
 
-        public void Add(SuggestedMove move)
+        public void AddLast(SuggestedMove move)
         {
-            moves.Add(move);
+            moves.AddLast(move);
+        }
+
+        public void AddFirst(SuggestedMove move)
+        {
+            moves.AddFirst(move);
+        }
+
+        public SuggestedMove First()
+        {
+            return moves.First.Value;
         }
     }
 }

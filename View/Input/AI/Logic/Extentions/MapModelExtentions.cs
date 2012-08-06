@@ -28,5 +28,25 @@ namespace View.Input.AI.Logic.Extentions
                 }
             }
         }
+
+        public static IEnumerable<TreeNode> BFS(this TreeNode head)
+        {
+            Queue<TreeNode> frontLine = new Queue<TreeNode>();
+            ISet<TreeNode> visited = new HashSet<TreeNode>();
+
+            frontLine.Enqueue(head);
+            while (frontLine.Count > 0)
+            {
+                TreeNode visiting = frontLine.Dequeue();
+                yield return visiting;
+                visited.Add(visiting);
+
+                foreach (TreeNode neighbor in visiting.GetChildern())
+                {
+                    if (!visited.Contains(neighbor))
+                        frontLine.Enqueue(neighbor);
+                }
+            }
+        }
     }
 }

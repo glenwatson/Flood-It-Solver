@@ -81,5 +81,29 @@ namespace View.Extentions
             array[y + 1, x] = t;
         }
         #endregion
+
+        public static string ToASCIIString<T>(this T[,] array)
+        {
+            return array.ToASCIIString<T>(t => t.ToString());
+        }
+
+        public static string ToASCIIString<T>(this T[,] array, Func<T, string> transform)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int y = 0; y < array.Height(); y++)
+            {
+                sb.Append('[');
+                for (int x = 0; x < array.Width(); x++)
+                {
+                    string transformed = transform(array.GetAt(x, y));
+                    sb.Append(transformed);
+                    sb.Append(' ');
+                }
+                sb.Append(']');
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
     }
 }

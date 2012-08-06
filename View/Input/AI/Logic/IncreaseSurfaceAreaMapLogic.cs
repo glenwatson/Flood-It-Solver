@@ -19,15 +19,15 @@ namespace View.Input.AI.Logic
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             MapNode head = MapBuilder.BuildMap(board);
-            List<MapNode> neighbors = head.GetNeighbors();
+            ISet<MapNode> neighbors = head.GetNeighbors();
 
-            int currentSurrfaceArea = neighbors.Count();
+            int currentSurrfaceArea = neighbors.Count;
             int highestSurrfaceArea = currentSurrfaceArea;
             Color highestSurrfaceAreaColor = head.Color;
 
             foreach (MapNode neighbor in neighbors)
             {
-                int neighborsIncreaseSurrfaceArea = neighbor.GetNeighbors().Count();
+                int neighborsIncreaseSurrfaceArea = neighbor.GetNeighbors().Count;
                 if (neighborsIncreaseSurrfaceArea > highestSurrfaceArea)
                 {
                     highestSurrfaceArea = neighborsIncreaseSurrfaceArea;
