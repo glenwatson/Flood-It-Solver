@@ -10,8 +10,15 @@ namespace View.Input.AI.Logic.Moves
     public class SuggestedMove
     {
         private HashSet<MoveWeight> suggestions = new HashSet<MoveWeight>();
-        public IEnumerable<MoveWeight> Ordered { get { return suggestions.OrderByDescending(move => move.Weight); } }
+        public IEnumerable<MoveWeight> OrderedBest { get { return suggestions.OrderByDescending(move => move.Weight); } }
 
+        public SuggestedMove(IEnumerable<Color> colors)
+        {
+            foreach(Color color in colors)
+            {
+                AddSuggestion(color, 1);
+            }
+        }
         public SuggestedMove(Color color) : this(color, 1) {}
         public SuggestedMove(Color color, int weight)
         {
@@ -25,18 +32,12 @@ namespace View.Input.AI.Logic.Moves
 
         public int GetWeight(Color color)
         {
-            return suggestions.First(move => move.Color == color).Weight;
+            return suggestions.Single(move => move.Color == color).Weight;
         }
-    }
-    public class MoveWeight
-    {
-        public Color Color { get; private set; }
-        public int Weight { get; private set; }
 
-        public MoveWeight(Color color, int weight)
+        internal void Intersect(SuggestedMove otherSuggestedMove)
         {
-            Color = color;
-            Weight = weight;
+            suggestions.Intersect(otherSuggestedMove.suggestions);
         }
     }
 }

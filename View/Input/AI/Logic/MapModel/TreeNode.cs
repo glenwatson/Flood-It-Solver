@@ -29,9 +29,14 @@ namespace View.Input.AI.Logic.MapModel
             _children.Add(node);
         }
 
-        public void Merge(TreeNode node)
+        public TreeNode Clone()
         {
-            throw new NotImplementedException("Rebalance?");
+            TreeNode clone = new TreeNode(Parent, Color);
+            foreach(TreeNode child in _children)
+            {
+                clone.AddChildern(child.Clone());
+            }
+            return clone;
         }
     }
 }

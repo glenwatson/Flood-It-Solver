@@ -10,16 +10,16 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
-    class MoveTowardsFarthestNodeLogic : AILogic
+    public class MoveTowardsFarthestNodeLogic : AILogic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            return new SuggestedMoves(GetPath(board).BestMoves.First());
+            return new SuggestedMoves(GetPath(board).Moves.First.Value.OrderedBest.First().Color);
         }
 
         public SuggestedMoves GetPath(Color[,] board)
         {
-            TreeNode head = MapBuilder.BuildTree(board);
+            TreeNode head = Builder.BuildTree(board);
             TreeNode farthestNode = head.BFS().Last();
 
             //Follow the path back to the beginning

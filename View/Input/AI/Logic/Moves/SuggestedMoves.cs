@@ -9,30 +9,45 @@ namespace View.Input.AI.Logic.Moves
 {
     public class SuggestedMoves
     {
-        private LinkedList<SuggestedMove> moves = new LinkedList<SuggestedMove>();
+        public LinkedList<SuggestedMove> Moves { get; private set; }
+        public IEnumerable<Color> BestMoves { get { return Moves.Select(move => move.OrderedBest.First().Color); }}
 
-        public IEnumerable<Color> BestMoves { get { return moves.Select(move => move.Ordered.First().Color); }}
-
-        public SuggestedMoves() {}
-
-        public SuggestedMoves(Color color)
+        public SuggestedMoves() 
         {
-            moves.AddLast(new SuggestedMove(color));
+            Moves = new LinkedList<SuggestedMove>();
+        }
+
+        public SuggestedMoves(Color color) : this()
+        {
+            Moves.AddLast(new SuggestedMove(color));
         }
 
         public void AddLast(SuggestedMove move)
         {
-            moves.AddLast(move);
+            Moves.AddLast(move);
         }
 
         public void AddFirst(SuggestedMove move)
         {
-            moves.AddFirst(move);
+            Moves.AddFirst(move);
         }
 
         public SuggestedMove First()
         {
-            return moves.First.Value;
+            return Moves.First.Value;
+        }
+
+        public void Intersect(SuggestedMoves moves)
+        {
+            IEnumerator<SuggestedMove> thisEnumerator = Moves.GetEnumerator();
+            IEnumerator<SuggestedMove> otherEnumerator = moves.Moves.GetEnumerator();
+            while (thisEnumerator.MoveNext() && otherEnumerator.MoveNext())
+            {
+                SuggestedMove thisSuggestedMove = thisEnumerator.Current;
+                SuggestedMove otherSuggestedMove = otherEnumerator.Current;
+                thisSuggestedMove.Intersect(otherSuggestedMove);
+            }
+            moves.Moves = null; //trash the other data
         }
     }
 }

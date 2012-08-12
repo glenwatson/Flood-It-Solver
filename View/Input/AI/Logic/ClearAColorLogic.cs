@@ -10,11 +10,11 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
-    class ClearAColorLogic : AILogic
+    public class ClearAColorLogic : AILogic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            MapNode head = MapBuilder.BuildMap(board);
+            MapNode head = Builder.BuildMap(board);
             ISet<MapNode> firstLayer = head.GetNeighbors();
             List<Color> possibleColorsToClear = firstLayer.Select(node => node.Color).ToList();
             
@@ -25,12 +25,14 @@ namespace View.Input.AI.Logic
                 MapNode currentNode = breathFirstSearch.Current;
                 if (!firstLayer.Contains(currentNode))
                 {
-                    //can't wipe out color
+                    //can't wipe out that color, it is behind the first layer
                     possibleColorsToClear.Remove(currentNode.Color);
                 }
             }
+
+            SuggestedMove move = new SuggestedMove(possibleColorsToClear);
             SuggestedMoves moves = new SuggestedMoves();
-            possibleColorsToClear.ForEach(color => moves.AddLast(new SuggestedMove(color)));
+            moves.AddFirst(move);
             return moves;
         }
     }

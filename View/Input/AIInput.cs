@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using Model;
 using View.Input.AI;
@@ -11,49 +12,47 @@ namespace View.Input
 {
     public class AIInput : IInput
     {
-        private readonly AILogic _logic;
+        private readonly List<AILogic> _logics;
         private BackgroundWorker _logicThread;
         private bool _shouldRun = true;
 
-        public static AIInput WithRandomLogic()
+        public AIInput(List<AILogic> logics)
         {
-            return new AIInput(new RandomLogic());
-        }
-        public static AIInput WithMoveTowardsFarthestNodeLogic()
-        {
-            return new AIInput(new MoveTowardsFarthestNodeLogic());
-        }
-        public static AIInput IncreaseSurfaceAreaMapLogic()
-        {
-            return new AIInput(new IncreaseSurfaceAreaMapLogic(-1));
-        }
-        public static AIInput WithIncreaseSurfaceAreaGridLogic()
-        {
-            return new AIInput(new IncreaseSurfaceAreaGridLogic());
-        }
-        public static AIInput WithClearAColorLogic()
-        {
-            return new AIInput(new ClearAColorLogic());
-        }
-
-        private AIInput(AILogic logic)
-        {
-            _logic = logic;
+            _logics = logics;
             _logicThread = new BackgroundWorker();
             _logicThread.DoWork += StartQueryingLogic;
         }
+        public AIInput(AILogic logic) : 
+            this(new List<AILogic>(){logic})
+        {}
+
 
         private void StartQueryingLogic(object sender, DoWorkEventArgs e)
         {
             while (_shouldRun)
             {
-                //Thread.Sleep(1000);
-                Console.ReadLine();
-                SuggestedMoves colorsChosen = _logic.ChooseColor(GetController().GetUpdate()); //reaches across other thread to get the current Board
+                Thread.Sleep(1000);
+                //Console.ReadLine();
+
                 Controller controller = GetController();
-                foreach (Color colorChosen in colorsChosen.BestMoves)
-                    controller.PickColor(colorChosen);
-                //ChosenColorQueue.Instance().Enqueue(colorChosen);
+                if (_logics.Count == 1)
+                {
+                    foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate())
+                        .Moves.Select(move => move.OrderedBest.First().Color))
+                    {
+                        controller.PickColor(colorChosen);
+                    }
+                }
+                else
+                {
+                    foreach (AILogic logic in _logics)
+                    {
+                        SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
+                        //colorsChosen.Moves
+                        //TODO: do something with result
+                    }
+                    
+                }
             }
         }
 
@@ -84,7 +83,7 @@ namespace View.Input
 
         private Controller GetController()
         {
-            return Controller.Instance(this, null);
+            return Controller.Instance(null, null);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Color = Model.Color;
 using View.Extentions;
+using System.Collections.Generic;
 
 namespace View.Views
 {
@@ -14,8 +15,8 @@ namespace View.Views
     /// </summary>
     public partial class BoardView : UserControl
     {
-        private Color[,] _board;
         private bool _initialized = false;
+        private Color[,] _board;
         public Color[,] Board { 
             private get
             {
@@ -53,7 +54,7 @@ namespace View.Views
                 for (int row = 0; row < grdBoard.RowDefinitions.Count; row++)
                 {
                     var color = ColorToBrush(Board[row, col]);
-                    var rect = new Rectangle { Stroke = Brushes.Azure, Fill = color, Margin = new Thickness(-1), };
+                    var rect = new Rectangle { Fill = color, Margin = new Thickness(-1), };
 
                     grdBoard.Children.Add(rect);
                     Grid.SetColumn(rect, col);

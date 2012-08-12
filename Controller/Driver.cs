@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Model;
+using Model.Players;
 using View.Input;
 using View.Players;
 using View.Shared;
 using View.Views;
+using View.Input.AI.Logic;
 
 namespace View
 {
@@ -18,12 +21,14 @@ namespace View
         {
             //create View and Input
             //HumanGUIPlayer gui = new HumanGUIPlayer();
-            AIInput ai = AIInput.WithMoveTowardsFarthestNodeLogic();
+            AIInput ai = new AIInput(new IncreaseSurfaceAreaGridLogic());
             IInput input = ai;
             GUIDisplay guiDisplay = new GUIDisplay();
             IView view = guiDisplay;
-            //give the View and Input to the Controller
-            Controller controller = Controller.Instance(input, view);
+
+            Player player = new Player(view, ai);
+            Game game = new Game(9, 16);
+            Controller controller = Controller.Instance(game, player);
 
             ai.Start();
             view.Display();

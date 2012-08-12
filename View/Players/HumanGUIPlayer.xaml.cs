@@ -18,7 +18,7 @@ namespace View.Players
 
         private Controller getController()
         {
-            return Controller.Instance(this, this);
+            return Controller.Instance(null, null);
         }
 
         //private void ResizeButtons()

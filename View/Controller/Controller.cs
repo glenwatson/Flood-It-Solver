@@ -14,19 +14,19 @@ namespace View
 
         private static Controller _singleton;
 
-        public static Controller Instance(IInput i, IView v)
+        public static Controller Instance(Game g, Player p)
         {
             if (_singleton == null)
-                _singleton = new Controller(i, v);
+                _singleton = new Controller(g, p);
             return _singleton;
         }
 
         #endregion
 
-        private Controller(IInput i, IView v)
+        private Controller(Game g, Player p)
         {
-            player = new Player(v, i);
-            game = new Game(9, 16);
+            player = p;
+            game = g;
             game.BoardUpdated += player.BoardWasUpdated;
             //Have to manually update the player the first time because we missed the event in the Game ctor()
             player.BoardWasUpdated(GetUpdate());

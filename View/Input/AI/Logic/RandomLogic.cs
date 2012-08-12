@@ -8,7 +8,7 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
-    class RandomLogic : AILogic
+    public class RandomLogic : AILogic
     {
         Random rand = new Random();
         public override SuggestedMoves ChooseColor(Color[,] board)

@@ -48,5 +48,6 @@ namespace View.Input.AI.Logic.Extentions
                 }
             }
         }
+
     }
 }
