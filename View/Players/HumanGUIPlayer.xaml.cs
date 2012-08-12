@@ -3,13 +3,14 @@ using System.Windows;
 using Model;
 using View.Shared;
 using Color = Model.Color;
-
 namespace View.Players
 {
 	/// <summary>
 	/// Interaction logic for HumanGUIPlayer.xaml
 	/// </summary>
-	public partial class HumanGUIPlayer : Window, IView, IInput
+    //I don't know where to put this class because it's both an IView and an IInput.
+    //I know it's not an actual Player, but it's close
+    public partial class HumanGUIPlayer : Window, IView, IInput
 	{
 		public HumanGUIPlayer()
 		{

@@ -1,6 +1,6 @@
 ﻿using Control;
 using Model;
-using Model.Players;
+using View.Players;
 using View.Shared;
 
 namespace View

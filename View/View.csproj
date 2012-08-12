@@ -82,6 +82,7 @@
     <Compile Include="Input\AI\Logic\MoveTowardsFarthestNodeLogic.cs" />
     <Compile Include="Input\AI\Logic\RandomLogic.cs" />
     <Compile Include="Input\StdInInput.cs" />
+    <Compile Include="Players\AIPlayer.cs" />
     <Compile Include="Players\HumanGUIPlayer.xaml.cs">
       <DependentUpon>HumanGUIPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>

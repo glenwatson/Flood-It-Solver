@@ -1,6 +1,7 @@
-﻿using View.Shared;
+﻿using Model;
+using View.Shared;
 
-namespace Model.Players
+namespace View.Players
 {
     /// <summary>
     /// Kind of a 2nd controller. 
@@ -9,13 +10,11 @@ namespace Model.Players
     /// </summary>
     public class Player
     {
-        private Color[,] boardCache;
-
         private IView view;
         private IInput input;
 
-        private delegate void BoardUpdatedDel(Color[,] board);
-        private event BoardUpdatedDel BoardUpdated;
+        protected delegate void BoardUpdatedDel(Color[,] board);
+        protected event BoardUpdatedDel BoardUpdated;
 
         public void BoardWasUpdated(Color[,] board)
         {
@@ -23,14 +22,11 @@ namespace Model.Players
             if (handler != null) handler(board);
         }
 
-        public Player(IInput i)
-        {
-            input = i;
-        }
-        public Player(IView v, IInput i) : this(i)
+        public Player(IView v, IInput i)
         {
             view = v;
             SubscribeView(v);
+            input = i;
         }
 
         /// <summary>

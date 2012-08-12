@@ -26,6 +26,10 @@ namespace View.Input
             this(new List<AILogic>(){logic})
         {}
 
+        public void BoardUpdated(Color[,] board)
+        {
+            //Allow query logic thread to allow the AI to calc the next Color
+        }
 
         private void StartQueryingLogic(object sender, DoWorkEventArgs e)
         {
@@ -37,8 +41,8 @@ namespace View.Input
                 Controller controller = GetController();
                 if (_logics.Count == 1)
                 {
-                    foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate())
-                        .Moves.Select(move => move.OrderedBest.First().Color))
+                    //Lets the one logic class choose it's color and makes the best moves out of it
+                    foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate()).BestMoves)
                     {
                         controller.PickColor(colorChosen);
                     }

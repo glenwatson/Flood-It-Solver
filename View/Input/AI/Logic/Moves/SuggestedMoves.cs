@@ -10,6 +10,9 @@ namespace View.Input.AI.Logic.Moves
     public class SuggestedMoves
     {
         public LinkedList<SuggestedMove> Moves { get; private set; }
+        /// <summary>
+        /// Gets the best Color for each turn based on weight
+        /// </summary>
         public IEnumerable<Color> BestMoves { get { return Moves.Select(move => move.OrderedBest.First().Color); }}
 
         public SuggestedMoves() 
