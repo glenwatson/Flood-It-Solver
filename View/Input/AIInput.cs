@@ -16,14 +16,14 @@ namespace View.Input
         private BackgroundWorker _logicThread;
         private bool _shouldRun = true;
 
-        public AIInput(List<AILogic> logics)
+        public AIInput(params AILogic[] logics)
         {
-            _logics = logics;
+            _logics = logics.ToList();
             _logicThread = new BackgroundWorker();
             _logicThread.DoWork += StartQueryingLogic;
         }
         public AIInput(AILogic logic) : 
-            this(new List<AILogic>(){logic})
+            this(new AILogic[]{logic})
         {}
 
         public void BoardUpdated(Color[,] board)
@@ -38,27 +38,46 @@ namespace View.Input
                 Thread.Sleep(1000);
                 //Console.ReadLine();
 
-                Controller controller = GetController();
-                if (_logics.Count == 1)
-                {
-                    //Lets the one logic class choose it's color and makes the best moves out of it
-                    foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate()).BestMoves)
-                    {
-                        controller.PickColor(colorChosen);
-                    }
-                }
-                else
-                {
-                    foreach (AILogic logic in _logics)
-                    {
-                        SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
-                        //colorsChosen.Moves
-                        //TODO: do something with result
-                    }
-                    
-                }
+                QueryLogic();
             }
         }
+
+        private void QueryLogic()
+        {
+            if (_logics.Count == 1)
+            {
+                QuerySingleLogic();
+            }
+            else
+            {
+                QueryMultipleLogics();
+            }
+        }
+
+        private void QuerySingleLogic()
+        {
+            //Lets the one logic class choose it's color and makes the best moves out of it
+            Controller controller = GetController();
+            foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate()).BestMoves)
+            {
+                controller.PickColor(colorChosen);
+            }
+        }
+
+        private void QueryMultipleLogics()
+        {
+            Controller controller = GetController();
+            Dictionary<Color, int> colorScore = new Dictionary<Color, int> { {Color.Red, 0}, {Color.Blue, 0}, {Color.Yellow, 0}, {Color.Green, 0}, {Color.Orange, 0}, {Color.Purple, 0} };
+            foreach (AILogic logic in _logics)
+            {
+                SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
+
+                Color color = colorsChosen.BestMoves.First();
+                colorScore[color]++;
+            }
+        }
+
+        
 
         public void Start()
         {

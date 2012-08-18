@@ -17,9 +17,8 @@ namespace View.Input.AI.Logic
             //TODO: analyse the board and choose a color
             Color bestColor = Color.Red;
             int greatestSurfaceArea = 0;
-            foreach (Object colorObj in Enum.GetValues(typeof(Color)))
+            foreach (Color color in Enum.GetValues(typeof(Color)).Cast<Color>())
             {
-                Color color = (Color)colorObj;
                 if (color != currentColor)
                 {
                     Board boardLogic = new Board(board);
