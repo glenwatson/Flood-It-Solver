@@ -16,27 +16,66 @@ namespace View.Input.AI.Logic
         {
             _lookAheadLevel = lookAheadLevel;
         }
+
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             MapNode head = Builder.BuildMap(board);
-            ISet<MapNode> neighbors = head.GetNeighbors();
 
-            int highestSurfaceArea = int.MinValue;
-            Color highestSurfaceAreaColor = head.Color;
+            MapNodeDecisionTree decisionTree = BuildDecisionTree(head.Clone(), _lookAheadLevel);
+            Stack<Color> currentDecisionTreePath = new Stack<Color>();
+            SurfaceAreaResult bestSurfaceArea = GetBest(decisionTree, new SurfaceAreaResult { SurfaceArea = 0, Path = new Color[0] }, currentDecisionTreePath);
 
-            MapNode headClone = head.Clone();
-            foreach (MapNode neighbor in neighbors)
+            SuggestedMoves moves = new SuggestedMoves();
+            bestSurfaceArea.Path.ToList().ForEach(c => moves.AddLast(new SuggestedMove(c)));
+            return moves;
+
+        }
+        class SurfaceAreaResult
+        {
+            public int SurfaceArea { get; set; }
+            public Color[] Path { get; set; }
+        }
+        private SurfaceAreaResult GetBest(MapNodeDecisionTree currentDecisionTree, SurfaceAreaResult bestSurfaceArea, Stack<Color> highestColorStack)
+        {
+            highestColorStack.Push(currentDecisionTree.Color); //mirror the execution stack
+            if (GetSurfaceArea(currentDecisionTree.CurrentMap) > bestSurfaceArea.SurfaceArea)
             {
-                int neighborsIncreaseSurrfaceArea = neighbor.GetNeighbors().Count;
-                if (neighborsIncreaseSurrfaceArea > highestSurfaceArea)
+                bestSurfaceArea.SurfaceArea = GetSurfaceArea(currentDecisionTree.CurrentMap);
+                bestSurfaceArea.Path = highestColorStack.ToArray();
+            }
+            foreach (MapNodeDecisionTree decisionTreeChild in currentDecisionTree.Children)
+            {
+                SurfaceAreaResult childSurfaceArea = GetBest(decisionTreeChild, bestSurfaceArea, highestColorStack);
+                if (childSurfaceArea.SurfaceArea > bestSurfaceArea.SurfaceArea)
                 {
-                    highestSurfaceArea = neighborsIncreaseSurrfaceArea;
-                    highestSurfaceAreaColor = neighbor.Color;
+                    bestSurfaceArea = childSurfaceArea;
                 }
             }
-
-            return new SuggestedMoves(highestSurfaceAreaColor);
+            highestColorStack.Pop(); //mirror the execution stack
+            return bestSurfaceArea;
         }
+
+        //public override SuggestedMoves ChooseColor(Color[,] board)
+        //{
+        //    MapNode head = Builder.BuildMap(board);
+        //    ISet<MapNode> neighbors = head.GetNeighbors();
+
+        //    int highestSurfaceArea = int.MinValue;
+        //    Color highestSurfaceAreaColor = head.Color;
+
+        //    MapNode headClone = head.Clone();
+        //    foreach (MapNode neighbor in neighbors)
+        //    {
+        //        int neighborsIncreaseSurrfaceArea = neighbor.GetNeighbors().Count;
+        //        if (neighborsIncreaseSurrfaceArea > highestSurfaceArea)
+        //        {
+        //            highestSurfaceArea = neighborsIncreaseSurrfaceArea;
+        //            highestSurfaceAreaColor = neighbor.Color;
+        //        }
+        //    }
+
+        //    return new SuggestedMoves(highestSurfaceAreaColor);
+        //}
 
 
         class MapNodeDecisionTree
@@ -55,7 +94,7 @@ namespace View.Input.AI.Logic
             MapNodeDecisionTree decisionNode = new MapNodeDecisionTree(head);
             if (recurseLevel > 0)
             {
-                foreach (MapNode neighbor in head.GetNeighbors()) //@OPTIMIZE duplicate work if two neighbors are the same color
+                foreach (MapNode neighbor in head.GetNeighbors().Distinct(new MapNodeColorComparer()))
                 {
                     MapNode headClone = head.Clone();
                     headClone.PickColor(neighbor.Color); //make the move
@@ -66,10 +105,21 @@ namespace View.Input.AI.Logic
             return decisionNode;
         }
 
-
         private int GetSurfaceArea(MapNode head)
         {
             return head.GetNeighbors().Count;
+        }
+        class MapNodeColorComparer : IEqualityComparer<MapNode>
+        {
+            public bool Equals(MapNode x, MapNode y)
+            {
+                return x.Color == y.Color;
+            }
+
+            public int GetHashCode(MapNode obj)
+            {
+                return (int)obj.Color;
+            }
         }
     }
 }

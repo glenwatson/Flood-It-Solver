@@ -31,5 +31,9 @@ namespace View.Input.AI.Logic.DSModel
             }
             return false;
         }
+        public override int GetHashCode()
+        {
+            return _representative.GetHashCode();
+        }
     }
 }

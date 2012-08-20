@@ -35,9 +35,6 @@ namespace View.Input
         {
             while (_shouldRun)
             {
-                Thread.Sleep(1000);
-                //Console.ReadLine();
-
                 QueryLogic();
             }
         }
@@ -60,6 +57,8 @@ namespace View.Input
             Controller controller = GetController();
             foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate()).BestMoves)
             {
+                Thread.Sleep(1000);
+                //Console.ReadLine();
                 controller.PickColor(colorChosen);
             }
         }
@@ -75,6 +74,7 @@ namespace View.Input
                 Color color = colorsChosen.BestMoves.First();
                 colorScore[color]++;
             }
+            //TODO: do something with score
         }
 
         
