@@ -8,7 +8,7 @@ using View.Extentions;
 
 namespace View.Input.AI.Logic.MapModel
 {
-    class Builder
+    class MapBuilder
     {
         public static MapNode BuildMap(Color[,] board)
         {

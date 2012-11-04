@@ -19,14 +19,18 @@ namespace View.Input.AI.Logic
 
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            MapNode head = Builder.BuildMap(board);
+            MapNode head = MapBuilder.BuildMap(board);
 
             MapNodeDecisionTree decisionTree = BuildDecisionTree(head.Clone(), _lookAheadLevel);
             Stack<Color> currentDecisionTreePath = new Stack<Color>();
             SurfaceAreaResult bestSurfaceArea = GetBest(decisionTree, new SurfaceAreaResult { SurfaceArea = 0, Path = new Color[0] }, currentDecisionTreePath);
 
+            //convert the result to SuggestedMove
             SuggestedMoves moves = new SuggestedMoves();
-            bestSurfaceArea.Path.ToList().ForEach(c => moves.AddLast(new SuggestedMove(c)));
+            for (int i = 0; i < bestSurfaceArea.Path.Length-1; i++)
+            {
+                moves.AddFirst(new SuggestedMove(bestSurfaceArea.Path[i]));
+            }
             return moves;
 
         }
@@ -35,6 +39,13 @@ namespace View.Input.AI.Logic
             public int SurfaceArea { get; set; }
             public Color[] Path { get; set; }
         }
+        /// <summary>
+        /// Walks down each "branch" of the currentDecisionTree to see which has the best surface area
+        /// </summary>
+        /// <param name="currentDecisionTree"></param>
+        /// <param name="bestSurfaceArea"></param>
+        /// <param name="highestColorStack"></param>
+        /// <returns>The colors that result in the highest decision tree</returns>
         private SurfaceAreaResult GetBest(MapNodeDecisionTree currentDecisionTree, SurfaceAreaResult bestSurfaceArea, Stack<Color> highestColorStack)
         {
             highestColorStack.Push(currentDecisionTree.Color); //mirror the execution stack

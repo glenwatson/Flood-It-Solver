@@ -14,7 +14,7 @@ namespace View.Input.AI.Logic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
-            MapNode head = Builder.BuildMap(board);
+            MapNode head = MapBuilder.BuildMap(board);
             ISet<MapNode> firstLayer = head.GetNeighbors();
             List<Color> possibleColorsToClear = firstLayer.Select(node => node.Color).ToList();
             

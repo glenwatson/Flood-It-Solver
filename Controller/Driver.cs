@@ -20,7 +20,9 @@ namespace View
         {
             //create View and Input
             //HumanGUIPlayer gui = new HumanGUIPlayer();
-            AIInput ai = new AIInput(new IncreaseSurfaceAreaMapLogic(5));
+
+            AILogic[] logics = new AILogic[] { new IncreaseSurfaceAreaMapLogic(7) };
+            AIInput ai = new AIInput(logics);
             IInput input = ai;
             GUIDisplay guiDisplay = new GUIDisplay();
             IView view = guiDisplay;

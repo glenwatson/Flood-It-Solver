@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -16,6 +17,11 @@ namespace View.Input
         private BackgroundWorker _logicThread;
         private bool _shouldRun = true;
 
+        /// <summary>
+        /// Uses multiple AILogics in the choice of color
+        /// (Order does not matter)
+        /// </summary>
+        /// <param name="logics">The AILogics to use</param>
         public AIInput(params AILogic[] logics)
         {
             _logics = logics.ToList();
@@ -55,26 +61,31 @@ namespace View.Input
         {
             //Lets the one logic class choose it's color and makes the best moves out of it
             Controller controller = GetController();
-            foreach (Color colorChosen in _logics.First().ChooseColor(controller.GetUpdate()).BestMoves)
+            foreach (Color colorChosen in _logics.Single().ChooseColor(controller.GetUpdate()).BestMoves)
             {
                 Thread.Sleep(1000);
-                //Console.ReadLine();
+                Console.WriteLine(colorChosen);
                 controller.PickColor(colorChosen);
             }
         }
 
+        /// <summary>
+        /// Asks each AILogic for it's vote of color for the next move and chooses the highest vote
+        /// </summary>
         private void QueryMultipleLogics()
         {
             Controller controller = GetController();
-            Dictionary<Color, int> colorScore = new Dictionary<Color, int> { {Color.Red, 0}, {Color.Blue, 0}, {Color.Yellow, 0}, {Color.Green, 0}, {Color.Orange, 0}, {Color.Purple, 0} };
+            Dictionary<Color, int> colorVote = new Dictionary<Color, int> { {Color.Red, 0}, {Color.Blue, 0}, {Color.Yellow, 0}, {Color.Green, 0}, {Color.Orange, 0}, {Color.Purple, 0} };
             foreach (AILogic logic in _logics)
             {
                 SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
 
                 Color color = colorsChosen.BestMoves.First();
-                colorScore[color]++;
+                colorVote[color]++;
             }
-            //TODO: do something with score
+
+            Color highestVote = colorVote.OrderBy(keyValuePair => keyValuePair.Value).First().Key;
+            controller.PickColor(highestVote);
         }
 
         

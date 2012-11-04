@@ -19,7 +19,7 @@ namespace View.Input.AI.Logic
 
         public SuggestedMoves GetPath(Color[,] board)
         {
-            TreeNode head = Builder.BuildTree(board);
+            TreeNode head = MapBuilder.BuildTree(board);
             TreeNode farthestNode = head.BFS().Last();
 
             //Follow the path back to the beginning
