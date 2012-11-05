@@ -13,7 +13,24 @@ namespace View.Input.AI.Logic.Moves
         /// <summary>
         /// Gets the best Color for each turn based on weight
         /// </summary>
-        public IEnumerable<Color> BestMoves { get { return Moves.Select(move => move.OrderedBest.First().Color); }}
+        public IEnumerable<Color> BestMoves
+        {
+            get
+            {
+                foreach(SuggestedMove move in Moves)
+                {
+                    IEnumerable<MoveWeight> bests = move.OrderedBest;
+                    if (bests.Count() > 0)
+                    {
+                        yield return bests.First().Color;
+                    }
+                    else //if there aren't any suggested moves for the current turn, stop
+                    {
+                        yield break;
+                    }
+                }
+            }
+        }
 
         public SuggestedMoves() 
         {

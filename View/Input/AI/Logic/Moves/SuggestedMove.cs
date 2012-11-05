@@ -10,6 +10,10 @@ namespace View.Input.AI.Logic.Moves
     public class SuggestedMove
     {
         private HashSet<MoveWeight> suggestions = new HashSet<MoveWeight>();
+
+        /// <summary>
+        /// Orders the possible moves from best to worse
+        /// </summary>
         public IEnumerable<MoveWeight> OrderedBest { get { return suggestions.OrderByDescending(move => move.Weight); } }
 
         public SuggestedMove(IEnumerable<Color> colors)

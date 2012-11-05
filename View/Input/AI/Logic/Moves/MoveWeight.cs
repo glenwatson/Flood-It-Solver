@@ -7,6 +7,9 @@ using Model;
 
 namespace View.Input.AI.Logic.Moves
 {
+    /// <summary>
+    /// A move and its weight
+    /// </summary>
     public class MoveWeight
     {
         public Color Color { get; private set; }
