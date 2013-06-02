@@ -71,7 +71,7 @@ namespace View.Views
                 throw new Exception("BoardView isn't initialized. Set the Board first.");
             //try
             //{
-                grdBoard.Dispatcher.Invoke(delegate()
+                grdBoard.Dispatcher.Invoke((Action)delegate()
                 {
                     foreach (var objChild in grdBoard.Children)
                     {

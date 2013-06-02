@@ -19,8 +19,9 @@ namespace View
         public static void Main(string[] args)
         {
             //create View and Input
-            //HumanGUIPlayer gui = new HumanGUIPlayer();
+            HumanGUIPlayer gui = new HumanGUIPlayer();
 
+            /*
             AILogic[] logics = new AILogic[] 
             { 
                 new IncreaseSurfaceAreaMapLogic(7),
@@ -28,15 +29,16 @@ namespace View
                 new ClearAColorLogic()
             };
             AIInput ai = new AIInput(logics);
-            IInput input = ai;
-            GUIDisplay guiDisplay = new GUIDisplay();
-            IView view = guiDisplay;
+            */
+            IInput input = gui;
+            //GUIDisplay guiDisplay = new GUIDisplay();
+            IView view = gui;
 
-            Player player = new Player(view, ai);
+            Player player = new Player(view, gui);
             Game game = new Game(9, 16);
             Controller controller = Controller.Instance(game, player);
 
-            ai.Start();
+            //gui.Start();
             view.Display();
 
         }

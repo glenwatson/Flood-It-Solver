@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D8DEC4D5-4160-4910-AF49-980EBADC0380}</ProjectGuid>
+    <ProjectGuid>{67FA7184-3CBC-4EE2-B158-EED0E599CA6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>View</RootNamespace>
     <AssemblyName>View</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -36,7 +34,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -44,7 +41,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,8 +71,8 @@
     <Compile Include="Input\AI\Logic\IncreaseSurfaceAreaMapLogic.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapBuilder.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapNode.cs" />
-    <Compile Include="Input\AI\Logic\Moves\MoveWeight.cs" />
     <Compile Include="Input\AI\Logic\MapModel\TreeNode.cs" />
+    <Compile Include="Input\AI\Logic\Moves\MoveWeight.cs" />
     <Compile Include="Input\AI\Logic\Moves\SuggestedMove.cs" />
     <Compile Include="Input\AI\Logic\Moves\SuggestedMoves.cs" />
     <Compile Include="Input\AI\Logic\MoveTowardsFarthestNodeLogic.cs" />
@@ -85,7 +81,6 @@
     <Compile Include="Players\AIPlayer.cs" />
     <Compile Include="Players\HumanGUIPlayer.xaml.cs">
       <DependentUpon>HumanGUIPlayer.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Players\Player.cs" />
     <Compile Include="Shared\IInput.cs" />
@@ -123,16 +118,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{72E35D12-C2B6-4609-B4AF-B78C280CEB64}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <Page Include="Players\HumanGUIPlayer.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\BoardViewControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -142,6 +130,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{8BDB7E0E-4579-4F35-B4B2-9E70F08A2913}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
