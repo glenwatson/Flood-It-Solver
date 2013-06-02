@@ -80,8 +80,11 @@ namespace View.Input
             {
                 SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
 
-                Color color = colorsChosen.BestMoves.First();
-                colorVote[color]++;
+                Color color = colorsChosen.BestMoves.FirstOrDefault();
+                if (color != null)
+                {
+                    colorVote[color]++;
+                }
             }
 
             Color highestVote = colorVote.OrderBy(keyValuePair => keyValuePair.Value).First().Key;

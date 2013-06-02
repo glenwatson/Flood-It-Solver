@@ -71,6 +71,35 @@ namespace View.Players
         }
         #endregion
 
+        #region key presses
+
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case System.Windows.Input.Key.R:
+                    SelectColor(Color.Red);
+                    break;
+                case System.Windows.Input.Key.O:
+                    SelectColor(Color.Orange);
+                    break;
+                case System.Windows.Input.Key.Y:
+                    SelectColor(Color.Yellow);
+                    break;
+                case System.Windows.Input.Key.G:
+                    SelectColor(Color.Green);
+                    break;
+                case System.Windows.Input.Key.B:
+                    SelectColor(Color.Blue);
+                    break;
+                case System.Windows.Input.Key.P:
+                    SelectColor(Color.Purple);
+                    break;
+            }
+        }
+
+        #endregion
+
         #region IView
         [STAThread]
         public void Display()
@@ -88,5 +117,6 @@ namespace View.Players
 			GameWinner(e.Turns);
 		}
         #endregion
+
 	}
 }

@@ -7,7 +7,7 @@ PixilateGraph
 	//needs to be efficient!
 	+ DFS() : IEnumerable<Node>
 		return DFS(head)
-	//I don't think you can do a DFS on a graph	w/o turning it into a tree somehow	
+	//You can't do a DFS on a graph w/o turning it into a tree somehow	
 	- DFS(current : Node) : IEnumberable<Node>
 		foreach node in current.Adjacent
 			if

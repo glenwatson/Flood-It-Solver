@@ -8,7 +8,6 @@ namespace View.Shared
 {
     public interface IInput
     {
-
         void GameOver(WinEventArgs winArgs);
     }
 }
