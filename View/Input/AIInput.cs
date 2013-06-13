@@ -13,24 +13,30 @@ namespace View.Input
 {
     public class AIInput : IInput
     {
-        private readonly List<AILogic> _logics;
+        private readonly List<AILogicWeight> _logics;
         private BackgroundWorker _logicThread;
         private bool _shouldRun = true;
 
         /// <summary>
-        /// Uses multiple AILogics in the choice of color
+        /// Uses multiple AILogics with their choice of color weighted<br/>
         /// (Order does not matter)
         /// </summary>
-        /// <param name="logics">The AILogics to use</param>
-        public AIInput(params AILogic[] logics)
+        /// <param name="weightedLogics">The AILogics to use with their weight</param>
+        public AIInput(IEnumerable<AILogicWeight> weightedLogics)
         {
-            _logics = logics.ToList();
+            _logics = weightedLogics.ToList();
             _logicThread = new BackgroundWorker();
             _logicThread.DoWork += StartQueryingLogic;
         }
+        /// <summary>
+        /// Uses multiple AILogics in the choice of color<br/>
+        /// (Order does not matter)
+        /// </summary>
+        /// <param name="logics">The AILogics to use</param>
+        public AIInput(params AILogic[] logics) : 
+            this(logics.Select(logic => new AILogicWeight(logic, 1))) {}
         public AIInput(AILogic logic) : 
-            this(new AILogic[]{logic})
-        {}
+            this(new AILogic[]{logic}) {}
 
         public void BoardUpdated(Color[,] board)
         {
@@ -61,7 +67,7 @@ namespace View.Input
         {
             //Lets the one logic class choose it's color and makes the best moves out of it
             Controller controller = GetController();
-            foreach (Color colorChosen in _logics.Single().ChooseColor(controller.GetUpdate()).BestMoves)
+            foreach (Color colorChosen in _logics.Single().Logic.ChooseColor(controller.GetUpdate()).BestMoves)
             {
                 Console.WriteLine(colorChosen);
                 controller.PickColor(colorChosen);
@@ -75,9 +81,9 @@ namespace View.Input
         {
             Controller controller = GetController();
             Dictionary<Color, int> colorVote = new Dictionary<Color, int>();
-            foreach (AILogic logic in _logics)
+            foreach (AILogicWeight logic in _logics)
             {
-                SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
+                SuggestedMoves colorsChosen = logic.Logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
 
                 if (colorsChosen.BestMoves.Any()) //if there are any moves returned
                 {
@@ -86,13 +92,20 @@ namespace View.Input
                     {
                         colorVote.Add(color, 0);
                     }
-                    colorVote[color]++;
+                    colorVote[color] += logic.Weight;
                 }
             }
 
-            Color highestVote = colorVote.OrderByDescending(keyValuePair => keyValuePair.Value).First().Key;
-            Console.WriteLine(highestVote);
-            controller.PickColor(highestVote);
+            if (colorVote.Count > 0)
+            {
+                Color highestVote = colorVote.OrderByDescending(keyValuePair => keyValuePair.Value).First().Key;
+                Console.WriteLine(highestVote);
+                controller.PickColor(highestVote);
+            }
+            else
+            {
+                Console.WriteLine("No colors were suggested!");
+            }
         }
 
         
@@ -125,6 +138,16 @@ namespace View.Input
         private Controller GetController()
         {
             return Controller.Instance(null, null);
+        }
+    }
+    public class AILogicWeight
+    {
+        public AILogic Logic { get; private set; }
+        public int Weight { get; private set; }
+        public AILogicWeight(AILogic logic, int weight)
+        {
+            Logic = logic;
+            Weight = weight;
         }
     }
 }

@@ -7,8 +7,15 @@ using Model;
 
 namespace View.Input.AI.Logic.Moves
 {
+    /// <summary>
+    /// A series of multiple moves<br/>
+    /// Each turn can have multiple suggested moves for it
+    /// </summary>
     public class SuggestedMoves
     {
+        /// <summary>
+        /// The list of moves suggested for each turn
+        /// </summary>
         public LinkedList<SuggestedMove> Moves { get; private set; }
         /// <summary>
         /// Gets the best Color for each turn based on weight

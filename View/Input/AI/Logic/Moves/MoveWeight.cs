@@ -20,5 +20,10 @@ namespace View.Input.AI.Logic.Moves
             Color = color;
             Weight = weight;
         }
+
+        public override int GetHashCode()
+        {
+            return Color.GetHashCode();
+        }
     }
 }

@@ -18,28 +18,27 @@ namespace View
         [STAThread]
         public static void Main(string[] args)
         {
-            //create View and Input
-            HumanGUIPlayer gui = new HumanGUIPlayer();
+            //create Input & View
+            //HumanGUIPlayer gui = new HumanGUIPlayer(); //IInput & IView
 
-            /*
-            AILogic[] logics = new AILogic[] 
-            { 
-                new IncreaseSurfaceAreaMapLogic(7),
-                new MoveTowardsFarthestNodeLogic(),
-                new ClearAColorLogic()
+            AILogicWeight[] logics = new AILogicWeight[] 
+            {
+                //new AILogicWeight(new RandomLogic(), 1),
+                //new AILogicWeight(new IncreaseSurfaceAreaMapLogic(3), 1),
+                //new AILogicWeight(new IncreaseSurfaceAreaGridLogic(), 1), //broken
+                //new AILogicWeight(new MoveTowardsFarthestNodeLogic(), 100),
+                //new AILogicWeight(new ClearAColorLogic(), 10000)
             };
-            AIInput ai = new AIInput(logics);
-            */
-            IInput input = gui;
-            //GUIDisplay guiDisplay = new GUIDisplay();
-            IView view = gui;
+            AIInput ai = new AIInput(logics); //IInput
+            GUIDisplay guiDisplay = new GUIDisplay(); //IView
 
-            Player player = new Player(view, gui);
+            Player player = new Player(guiDisplay, ai);
             Game game = new Game(9, 16);
             Controller controller = Controller.Instance(game, player);
 
             //gui.Start();
-            view.Display();
+            ai.Start();
+            guiDisplay.Display();
 
         }
     }
