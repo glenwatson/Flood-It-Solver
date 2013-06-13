@@ -63,7 +63,6 @@ namespace View.Input
             Controller controller = GetController();
             foreach (Color colorChosen in _logics.Single().ChooseColor(controller.GetUpdate()).BestMoves)
             {
-                Thread.Sleep(1000);
                 Console.WriteLine(colorChosen);
                 controller.PickColor(colorChosen);
             }
@@ -75,19 +74,24 @@ namespace View.Input
         private void QueryMultipleLogics()
         {
             Controller controller = GetController();
-            Dictionary<Color, int> colorVote = new Dictionary<Color, int> { {Color.Red, 0}, {Color.Blue, 0}, {Color.Yellow, 0}, {Color.Green, 0}, {Color.Orange, 0}, {Color.Purple, 0} };
+            Dictionary<Color, int> colorVote = new Dictionary<Color, int>();
             foreach (AILogic logic in _logics)
             {
                 SuggestedMoves colorsChosen = logic.ChooseColor(controller.GetUpdate()); //reaches across other thread to get the current Board
 
-                Color color = colorsChosen.BestMoves.FirstOrDefault();
-                if (color != null)
+                if (colorsChosen.BestMoves.Any()) //if there are any moves returned
                 {
+                    Color color = colorsChosen.BestMoves.First();
+                    if (!colorVote.ContainsKey(color))
+                    {
+                        colorVote.Add(color, 0);
+                    }
                     colorVote[color]++;
                 }
             }
 
-            Color highestVote = colorVote.OrderBy(keyValuePair => keyValuePair.Value).First().Key;
+            Color highestVote = colorVote.OrderByDescending(keyValuePair => keyValuePair.Value).First().Key;
+            Console.WriteLine(highestVote);
             controller.PickColor(highestVote);
         }
 
