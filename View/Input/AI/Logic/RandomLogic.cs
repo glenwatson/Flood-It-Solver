@@ -10,7 +10,17 @@ namespace View.Input.AI.Logic
 {
     public class RandomLogic : AILogic
     {
-        Random rand = new Random();
+        private Random rand;
+        public RandomLogic()
+        {
+            rand = new Random();
+        }
+
+        public RandomLogic(int seed)
+        {
+            rand = new Random(seed);
+        }
+
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             var randInt = rand.Next(0, Enum.GetValues(typeof(Color)).Length);
