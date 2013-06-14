@@ -40,6 +40,7 @@ namespace View.Input
 
         public void BoardUpdated(Color[,] board)
         {
+            //huh?
             //Allow query logic thread to allow the AI to calc the next Color
         }
 
@@ -51,6 +52,9 @@ namespace View.Input
             }
         }
 
+        /// <summary>
+        /// Asks the AI for it's suggestions and picks the best move(s)
+        /// </summary>
         private void QueryLogic()
         {
             if (_logics.Count == 1)
@@ -63,6 +67,9 @@ namespace View.Input
             }
         }
 
+        /// <summary>
+        /// Queries the only AILogic and plays those moves
+        /// </summary>
         private void QuerySingleLogic()
         {
             //Lets the one logic class choose it's color and makes the best moves out of it
@@ -107,8 +114,6 @@ namespace View.Input
                 Console.WriteLine("No colors were suggested!");
             }
         }
-
-        
 
         public void Start()
         {

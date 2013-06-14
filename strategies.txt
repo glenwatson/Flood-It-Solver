@@ -8,7 +8,7 @@ get to biggest piece
 http://retirementexperiment.blogspot.com/2009/03/flood-it-game.html
 
 unbury mode:
-It is important to recognize which color still has one of it's own buried and try to avoid choosing that color until it is unburied. Therefore, thinking of it like Chess in the last 8 moves or so is crucial to beating it with extra moves left over. Which color is has the least buried and what would unburrie it. If the one that would unbury it is also burried by another color then keep working backwards until you figure the best combination to finish off with.
+It is important to recognize which color still has one of it's own buried and try to avoid choosing that color until it is unburied. Therefore, thinking of it like Chess in the last 8 moves or so is crucial to beating it with extra moves left over. Which color is has the least buried and what would unburry it. If the one that would unbury it is also burried by another color then keep working backwards until you figure the best combination to finish off with.
 
 Work backwards, then forwards.----Not layerable
 
@@ -29,3 +29,7 @@ http://stackoverflow.com/questions/1430962/how-to-optimally-solve-the-flood-fill
 completely different approach http://markgritter.livejournal.com/673948.html
 
 Pick 4 or 5 colors and act as if the remaining color(s) are walls. Find quickest path to cover all choosen colors. Select remaining colors and any other colors that are trapped.
+
+Pick the nodes with the most neighbors
+
+Pick the color that has the highest number of itself along the boarder

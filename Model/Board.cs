@@ -66,7 +66,7 @@ namespace Model
         private void Randomize()
 		{
 			var colorValues = Enum.GetValues(typeof(Color));
-			Random rand = new Random(1);
+			Random rand = new Random();
 			for (int w = 0; w < BoardWidth; w++)
 				for (int h = 0; h < BoardHeigth; h++)
 				{
