@@ -72,6 +72,7 @@
     <Compile Include="Input\AI\Logic\MapModel\MapBuilder.cs" />
     <Compile Include="Input\AI\Logic\MapModel\MapNode.cs" />
     <Compile Include="Input\AI\Logic\MapModel\TreeNode.cs" />
+    <Compile Include="Input\AI\Logic\HighestCount.cs" />
     <Compile Include="Input\AI\Logic\Moves\MoveWeight.cs" />
     <Compile Include="Input\AI\Logic\Moves\SuggestedMove.cs" />
     <Compile Include="Input\AI\Logic\Moves\SuggestedMoves.cs" />

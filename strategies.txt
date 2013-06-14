@@ -30,6 +30,4 @@ completely different approach http://markgritter.livejournal.com/673948.html
 
 Pick 4 or 5 colors and act as if the remaining color(s) are walls. Find quickest path to cover all choosen colors. Select remaining colors and any other colors that are trapped.
 
-Pick the nodes with the most neighbors
-
 Pick the color that has the highest number of itself along the boarder
