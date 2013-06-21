@@ -78,5 +78,10 @@ namespace View.Input.AI.Logic.MapModel
 
             }
         }
+
+        public override string ToString()
+        {
+            return Color.ToString() + _neighbors.Count + " (" + GetHashCode() + ")"; ;
+        }
     }
 }

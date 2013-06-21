@@ -24,20 +24,20 @@ namespace View
             AILogicWeight[] logics = new AILogicWeight[] 
             {
                 //new AILogicWeight(new RandomLogic(), 1),
-                //new AILogicWeight(new IncreaseSurfaceAreaMapLogic(3), 100),
-                //new AILogicWeight(new IncreaseSurfaceAreaGridLogic(), 1), //broken
-                //new AILogicWeight(new MoveTowardsFarthestNodeLogic(), 1),
+                new AILogicWeight(new IncreaseSurfaceAreaMapLogic(3), 10),
+                //new AILogicWeight(new IncreaseSurfaceAreaGridLogic(), 1),
+                new AILogicWeight(new MoveTowardsFarthestNodeLogic(), 100),
                 //new AILogicWeight(new ClearAColorLogic(), 10000),
-                //new AILogicWeight(new HighestCount(), 10),
+                new AILogicWeight(new HighestCount(), 1),
             };
             AIInput ai = new AIInput(logics); //IInput
             GUIDisplay guiDisplay = new GUIDisplay(); //IView
 
             Player player = new Player(guiDisplay, ai);
-            Game game = new Game(9, 16);
+            Game game = new Game(3,3);//9, 16);
             Controller controller = Controller.Instance(game, player);
 
-            //gui.Start();
+            //gui.Display();
             ai.Start();
             guiDisplay.Display();
 

@@ -33,6 +33,7 @@ namespace View.Input.AI.Logic.MapModel
             Queue<MapTreeKeyValuePair> frontLine = new Queue<MapTreeKeyValuePair>();
             ISet<MapNode> visited = new HashSet<MapNode>();
             frontLine.Enqueue(new MapTreeKeyValuePair{MapNode = head, TreeNode = root});
+            visited.Add(head);
 
             while (frontLine.Count > 0)
             {
@@ -44,7 +45,8 @@ namespace View.Input.AI.Logic.MapModel
                         TreeNode childTreeNode = new TreeNode(mapTree.TreeNode, neighbor.Color);
                         //Claim this map node as your child
                         mapTree.TreeNode.AddChildern(childTreeNode);
-                        visited.Add(mapTree.MapNode);
+                        //mark map node as visited, no one can claim this map node again
+                        visited.Add(neighbor);
                         //queue it up to find it's children
                         frontLine.Enqueue(new MapTreeKeyValuePair { MapNode = neighbor, TreeNode = childTreeNode });
                     }

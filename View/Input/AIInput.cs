@@ -48,6 +48,7 @@ namespace View.Input
         {
             while (_shouldRun)
             {
+                Console.ReadLine();
                 QueryLogic();
             }
         }
@@ -102,7 +103,7 @@ namespace View.Input
                     colorVote[color] += logic.Weight;
                 }
             }
-
+            
             if (colorVote.Count > 0)
             {
                 Color highestVote = colorVote.OrderByDescending(keyValuePair => keyValuePair.Value).First().Key;

@@ -26,7 +26,7 @@ namespace View.Views
             PrintBoard(board);
         }
 
-        public static void PrintBoard(Color[,] board)
+        private static void PrintBoard(Color[,] board)
         {
             int estimatedLength = (board.GetLength(0) * board.GetLength(1)) * 2;
             StringBuilder sb = new StringBuilder(estimatedLength);
@@ -68,7 +68,6 @@ namespace View.Views
             }
             return result;
         }
-
         
     }
 }

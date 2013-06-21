@@ -38,5 +38,10 @@ namespace View.Input.AI.Logic.MapModel
             }
             return clone;
         }
+
+        public override string ToString()
+        {
+            return Color.ToString() + _children.Count + " ("+GetHashCode()+")";
+        }
     }
 }

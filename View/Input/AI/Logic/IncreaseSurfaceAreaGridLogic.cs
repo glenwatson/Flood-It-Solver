@@ -9,18 +9,22 @@ using View.Input.AI.Logic.Moves;
 
 namespace View.Input.AI.Logic
 {
+    /// <summary>
+    /// Picks the color that will have the greatest edge coverage
+    /// </summary>
     public class IncreaseSurfaceAreaGridLogic : AILogic
     {
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             Color currentColor = board[0, 0];
-            //TODO: analyse the board and choose a color
             Color bestColor = Color.Red;
             int greatestSurfaceArea = 0;
+            //test every color
             foreach (Color color in Enum.GetValues(typeof(Color)).Cast<Color>())
             {
-                if (color != currentColor)
+                if (color != currentColor) //the current color won't change anything
                 {
+                    //model picking that color
                     Board boardLogic = new Board(board);
                     boardLogic.Pick(color);
                     int surfaceArea = EdgeCoverage(boardLogic.GetCopyOfBoard());
@@ -33,6 +37,7 @@ namespace View.Input.AI.Logic
             }
             return new SuggestedMoves ( bestColor );
         }
+
         private int EdgeCoverage(Color[,] board)
         {
             bool[,] continuousVisited = new bool[board.Height(), board.Width()];
@@ -40,6 +45,7 @@ namespace View.Input.AI.Logic
             int covered = EdgeCoverage(0, 0, continuousVisited, edgesVisited, board);
             return covered;
         }
+
         private int EdgeCoverage(int x, int y, bool[,] continuousVisited, bool[,] edgesVisited, Color[,] board)
         {
             continuousVisited.SetAt(x, y, true);

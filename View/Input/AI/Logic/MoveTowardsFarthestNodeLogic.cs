@@ -19,22 +19,62 @@ namespace View.Input.AI.Logic
 
         public SuggestedMoves GetPath(Color[,] board)
         {
+            //Get the farthest nodes
             TreeNode head = MapBuilder.BuildTree(board);
-            TreeNode farthestNode = head.BFS().Last();
-
-            //Follow the path back to the beginning
-            SuggestedMoves suggestedMoves = new SuggestedMoves();
-
-            TreeNode currentNode = farthestNode;
-            while (currentNode.Parent != null)
+            ISet<TreeNode> farthestNodes = new HashSet<TreeNode>();
+            int highestDepth = 0;
+            foreach (TreeNode node in head.BFS()) //DFS would be better
             {
-                suggestedMoves.AddFirst(new SuggestedMove(currentNode.Color));
-                currentNode = currentNode.Parent;
+                int depth = GetDepth(node);
+                if (depth > highestDepth)
+                {
+                    highestDepth = depth;
+                    farthestNodes.Clear();
+                    farthestNodes.Add(node);
+                }
+                else if (depth == highestDepth)
+                {
+                    farthestNodes.Add(node);
+                }
             }
 
+            Console.Write("Farthest nodes are ");
+            farthestNodes.Select(n => n.Color).ToList().ForEach(c => Console.Write(c + ", "));
+            Console.WriteLine("\r\nFarthest node is " + GetDepth(farthestNodes.First()) + " away from the current");
+
+            //get the color that would step towards each color
+            IDictionary<Color, int> tally = new Dictionary<Color, int>();
+            foreach (TreeNode farthestNode in farthestNodes)
+            {
+                TreeNode currentNode = farthestNode;
+                while (currentNode.Parent != head)
+                {
+                    currentNode = currentNode.Parent;
+                }
+                if (!tally.ContainsKey(currentNode.Color))
+                {
+                    tally.Add(currentNode.Color, 1);
+                }
+                else
+                {
+                    tally[currentNode.Color]++;
+                }
+            }
+            SuggestedMoves suggestedMoves = new SuggestedMoves();
+            suggestedMoves.AddFirst(new SuggestedMove(tally.OrderByDescending(kvp => kvp.Value).Select(n => n.Key)));
             return suggestedMoves;
         }
 
-
+        private int GetDepth(TreeNode node)
+        {
+            int depth = 0;
+            TreeNode current = node;
+            while (current.Parent != null)
+            {
+                depth++;
+                current = current.Parent;
+            }
+            return depth;
+        }
     }
 }
