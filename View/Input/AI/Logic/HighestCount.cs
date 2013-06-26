@@ -29,5 +29,7 @@ namespace View.Input.AI.Logic
             }
             return new SuggestedMoves(count.OrderByDescending(keyValuePair => keyValuePair.Value).First().Key);
         }
+
+        public override void ChoseColor(Color color) { }
     }
 }

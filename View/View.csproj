@@ -60,6 +60,7 @@
     <Compile Include="Input\AIInput.cs" />
     <Compile Include="Input\AI\ChosenColorQueue.cs" />
     <Compile Include="Input\AI\Logic\AILogic.cs" />
+    <Compile Include="Input\AI\Logic\AvoidColor.cs" />
     <Compile Include="Input\AI\Logic\ClearAColorLogic.cs" />
     <Compile Include="Input\AI\Logic\DSModel\DisjoinSetBuilder.cs" />
     <Compile Include="Input\AI\Logic\DSModel\DisjoinSetCollection.cs" />

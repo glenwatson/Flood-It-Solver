@@ -24,11 +24,12 @@ namespace View
             AILogicWeight[] logics = new AILogicWeight[] 
             {
                 //new AILogicWeight(new RandomLogic(), 1),
-                new AILogicWeight(new IncreaseSurfaceAreaMapLogic(3), 10),
+                new AILogicWeight(new IncreaseSurfaceAreaMapLogic(4), 1000),
                 //new AILogicWeight(new IncreaseSurfaceAreaGridLogic(), 1),
                 new AILogicWeight(new MoveTowardsFarthestNodeLogic(), 100),
-                //new AILogicWeight(new ClearAColorLogic(), 10000),
-                new AILogicWeight(new HighestCount(), 1),
+                new AILogicWeight(new ClearAColorLogic(), 10000),
+                //new AILogicWeight(new HighestCount(), 1),
+                new AILogicWeight(new AvoidColor(), 100),
             };
             AIInput ai = new AIInput(logics); //IInput
             GUIDisplay guiDisplay = new GUIDisplay(); //IView

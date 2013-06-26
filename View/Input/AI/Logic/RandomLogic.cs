@@ -21,6 +21,8 @@ namespace View.Input.AI.Logic
             rand = new Random(seed);
         }
 
+        public override void ChoseColor(Color color) { }
+
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             var randInt = rand.Next(0, Enum.GetValues(typeof(Color)).Length);

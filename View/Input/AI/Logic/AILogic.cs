@@ -12,5 +12,6 @@ namespace View.Input.AI.Logic
     {
         //protected AILogic() { }
         public abstract SuggestedMoves ChooseColor(Color[,] board);
+        public abstract void ChoseColor(Color color);
     }
 }

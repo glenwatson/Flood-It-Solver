@@ -19,7 +19,8 @@ namespace View.Input.AI.Logic.Moves
         /// </summary>
         public IEnumerable<MoveWeight> OrderedBest { get { return suggestions.OrderByDescending(move => move.Weight); } }
 
-        public SuggestedMove(Color color) : this(color, 1) {}
+        public SuggestedMove() { }
+        public SuggestedMove(Color color) : this(color, 1) { }
         public SuggestedMove(Color color, int weight)
         {
             AddSuggestion(color, weight);

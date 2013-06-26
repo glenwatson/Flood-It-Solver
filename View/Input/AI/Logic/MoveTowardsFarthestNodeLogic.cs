@@ -17,6 +17,8 @@ namespace View.Input.AI.Logic
             return new SuggestedMoves(GetPath(board).Moves.First.Value.OrderedBest.First().Color);
         }
 
+        public override void ChoseColor(Color color) { }
+
         public SuggestedMoves GetPath(Color[,] board)
         {
             //Get the farthest nodes

@@ -35,5 +35,7 @@ namespace View.Input.AI.Logic
             moves.AddFirst(move);
             return moves;
         }
+
+        public override void ChoseColor(Color color) {}
     }
 }

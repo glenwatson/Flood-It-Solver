@@ -38,6 +38,8 @@ namespace View.Input.AI.Logic
             return new SuggestedMoves ( bestColor );
         }
 
+        public override void ChoseColor(Color color) { }
+
         private int EdgeCoverage(Color[,] board)
         {
             bool[,] continuousVisited = new bool[board.Height(), board.Width()];

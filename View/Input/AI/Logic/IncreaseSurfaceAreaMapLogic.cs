@@ -17,6 +17,8 @@ namespace View.Input.AI.Logic
             _lookAheadLevel = lookAheadLevel;
         }
 
+        public override void ChoseColor(Color color) { }
+
         public override SuggestedMoves ChooseColor(Color[,] board)
         {
             MapNode head = MapBuilder.BuildMap(board);
